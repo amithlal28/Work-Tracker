@@ -1,0 +1,17 @@
+/* App specific styles if needed, mostly using Bootstrap utility classes */
+.card {
+  border: none;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+  /* Soft shadow */
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.table-hover tbody tr:hover {
+  background-color: rgba(0, 0, 0, 0.02);
+}
+
+.btn-primary {
+  background-color: #0d6efd;
+  /* Bootstrap default, can customize */
+  border: none;
+}
