@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useMemo } from 'react';
 import { Container, Navbar, Button, Modal, Form } from 'react-bootstrap';
 import { Download, Trash2, LogOut, KeyRound } from 'lucide-react';
 import { StorageService } from './services/storage';
@@ -70,9 +70,13 @@ function App() {
     }
   };
 
-  const handleExport = (startDate, endDate) => {
+  const uniqueTasks = useMemo(() => {
+    return [...new Set(entries.map(e => e.task))].sort();
+  }, [entries]);
+
+  const handleExport = (startDate, endDate, taskName) => {
     if (!currentUser) return;
-    StorageService.exportToExcel(currentUser, startDate, endDate);
+    StorageService.exportToExcel(currentUser, startDate, endDate, taskName);
   };
 
   // --- Render ---
@@ -143,6 +147,7 @@ function App() {
         show={showExportModal}
         onHide={() => setShowExportModal(false)}
         onExport={handleExport}
+        availableTasks={uniqueTasks}
       />
 
       {/* Secure Clear Data Modal */}
