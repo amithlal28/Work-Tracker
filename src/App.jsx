@@ -74,9 +74,9 @@ function App() {
     return [...new Set(entries.map(e => e.task))].sort();
   }, [entries]);
 
-  const handleExport = (startDate, endDate, taskName) => {
+  const handleExport = (startDate, endDate, selectedTasks) => {
     if (!currentUser) return;
-    StorageService.exportToExcel(currentUser, startDate, endDate, taskName);
+    StorageService.exportToExcel(currentUser, startDate, endDate, selectedTasks);
   };
 
   // --- Render ---

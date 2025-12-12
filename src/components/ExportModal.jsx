@@ -6,11 +6,20 @@ export function ExportModal({ show, onHide, onExport, availableTasks = [] }) {
     const today = new Date().toISOString().split('T')[0];
     const [startDate, setStartDate] = useState(today);
     const [endDate, setEndDate] = useState(today);
-    const [selectedTask, setSelectedTask] = useState('');
+    const [selectedTasks, setSelectedTasks] = useState([]);
 
     const handleExport = () => {
-        onExport(startDate, endDate, selectedTask);
+        // If empty, we pass empty array which logic treats as "All"
+        onExport(startDate, endDate, selectedTasks);
         onHide();
+    };
+
+    const toggleTask = (task) => {
+        if (selectedTasks.includes(task)) {
+            setSelectedTasks(selectedTasks.filter(t => t !== task));
+        } else {
+            setSelectedTasks([...selectedTasks, task]);
+        }
     };
 
     return (
@@ -46,17 +55,21 @@ export function ExportModal({ show, onHide, onExport, availableTasks = [] }) {
                         </Col>
                         <Col md={12}>
                             <Form.Group>
-                                <Form.Label className="small fw-bold text-secondary">TASK NAME (OPTIONAL)</Form.Label>
-                                <Form.Select
-                                    value={selectedTask}
-                                    onChange={(e) => setSelectedTask(e.target.value)}
-                                    className="shadow-sm border-0 bg-light"
-                                >
-                                    <option value="">-- All Tasks --</option>
+                                <Form.Label className="small fw-bold text-secondary mb-2">TASKS (LEAVE EMPTY FOR ALL)</Form.Label>
+                                <div className="bg-light p-3 rounded shadow-sm border-0" style={{ maxHeight: '150px', overflowY: 'auto' }}>
+                                    {availableTasks.length === 0 && <span className="text-muted small">No tasks found.</span>}
                                     {availableTasks.map((task, index) => (
-                                        <option key={index} value={task}>{task}</option>
+                                        <Form.Check
+                                            key={index}
+                                            type="checkbox"
+                                            id={`task-${index}`}
+                                            label={task}
+                                            checked={selectedTasks.includes(task)}
+                                            onChange={() => toggleTask(task)}
+                                            className="mb-2 small"
+                                        />
                                     ))}
-                                </Form.Select>
+                                </div>
                             </Form.Group>
                         </Col>
                     </Row>
