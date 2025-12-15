@@ -1,8 +1,8 @@
 import React, { useMemo } from 'react';
 import { Table, Button, Accordion } from 'react-bootstrap';
-import { Trash2 } from 'lucide-react';
+import { Trash2, Pencil } from 'lucide-react';
 
-export function WorkDashboard({ entries, onDelete }) {
+export function WorkDashboard({ entries, onDelete, onEdit }) {
     // Group entries by Date (descending)
     const groupedEntries = useMemo(() => {
         const groups = {};
@@ -61,16 +61,25 @@ export function WorkDashboard({ entries, onDelete }) {
                                 <tbody>
                                     {items.map(entry => (
                                         <tr key={entry.id} className="border-bottom-0">
-                                            <td style={{ width: '40%' }} className="card-text fw-medium text-dark ps-0">
+                                            <td style={{ width: '35%' }} className="card-text fw-medium text-dark ps-0">
                                                 {entry.task}
                                             </td>
-                                            <td style={{ width: '40%' }} className="text-muted small">
+                                            <td style={{ width: '35%' }} className="text-muted small">
                                                 {entry.details}
                                             </td>
                                             <td style={{ width: '10%' }} className="text-end fw-bold text-secondary">
                                                 {entry.hours.toFixed(2)}
                                             </td>
-                                            <td style={{ width: '10%' }} className="text-end pe-0">
+                                            <td style={{ width: '20%' }} className="text-end pe-0">
+                                                <Button
+                                                    variant="link"
+                                                    size="sm"
+                                                    className="text-secondary p-0 opacity-25 hover-opacity-100 text-decoration-none me-2"
+                                                    onClick={() => onEdit(entry)}
+                                                    title="Edit"
+                                                >
+                                                    <Pencil size={14} />
+                                                </Button>
                                                 <Button
                                                     variant="link"
                                                     size="sm"

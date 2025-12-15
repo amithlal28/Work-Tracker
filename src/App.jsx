@@ -5,6 +5,7 @@ import { StorageService } from './services/storage';
 import { WorkEntryForm } from './components/WorkEntryForm';
 import { WorkDashboard } from './components/WorkDashboard';
 import { ExportModal } from './components/ExportModal';
+import { EditEntryModal } from './components/EditEntryModal';
 import { LoginScreen } from './components/LoginScreen';
 import { AdminPanel } from './components/AdminPanel';
 import './App.css';
@@ -16,6 +17,7 @@ function App() {
   // Modals
   const [showClearConfirm, setShowClearConfirm] = useState(false);
   const [showExportModal, setShowExportModal] = useState(false);
+  const [editingEntry, setEditingEntry] = useState(null);
 
   // Clear Data Security
   const [deletePasskey, setDeletePasskey] = useState('');
@@ -53,6 +55,13 @@ function App() {
       StorageService.deleteEntry(currentUser, id);
       setEntries(StorageService.load(currentUser));
     }
+  };
+
+  const handleUpdateEntry = (updatedEntry) => {
+    if (!currentUser) return;
+    StorageService.updateEntry(currentUser, updatedEntry);
+    setEntries(StorageService.load(currentUser));
+    setEditingEntry(null);
   };
 
   const handleClearData = (e) => {
@@ -137,7 +146,7 @@ function App() {
         <div className="fade-in-up">
           <WorkEntryForm onSave={handleAddEntry} />
           <div className="my-5">
-            <WorkDashboard entries={entries} onDelete={handleDeleteEntry} />
+            <WorkDashboard entries={entries} onDelete={handleDeleteEntry} onEdit={setEditingEntry} />
           </div>
         </div>
       </Container>
@@ -148,6 +157,14 @@ function App() {
         onHide={() => setShowExportModal(false)}
         onExport={handleExport}
         availableTasks={uniqueTasks}
+      />
+
+      {/* Edit Entry Modal */}
+      <EditEntryModal
+        show={!!editingEntry}
+        onHide={() => setEditingEntry(null)}
+        entry={editingEntry}
+        onSave={handleUpdateEntry}
       />
 
       {/* Secure Clear Data Modal */}
