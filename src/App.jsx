@@ -1,9 +1,25 @@
 import React, { useState, useEffect, useMemo } from 'react';
-import { Container, Navbar, Button, Modal, Form } from 'react-bootstrap';
+import { Container, Navbar, Button, Modal, Form, Row, Col } from 'react-bootstrap';
 import { Download, Trash2, LogOut, KeyRound, Upload } from 'lucide-react';
+import {
+  DndContext,
+  closestCenter,
+  KeyboardSensor,
+  PointerSensor,
+  useSensor,
+  useSensors,
+} from '@dnd-kit/core';
+import {
+  arrayMove,
+  SortableContext,
+  sortableKeyboardCoordinates,
+  rectSortingStrategy,
+} from '@dnd-kit/sortable';
 import { StorageService } from './services/storage';
+import { WeeklyActivityChart, TaskDistributionChart } from './components/WorkCharts';
 import { WorkEntryForm } from './components/WorkEntryForm';
 import { WorkDashboard } from './components/WorkDashboard';
+import { SortableItem } from './components/SortableItem';
 import { ExportModal } from './components/ExportModal';
 import { EditEntryModal } from './components/EditEntryModal';
 import { LoginScreen } from './components/LoginScreen';
@@ -13,6 +29,129 @@ import './App.css';
 function App() {
   const [currentUser, setCurrentUser] = useState(null);
   const [entries, setEntries] = useState([]);
+
+  // Widget Order State
+  const [widgets, setWidgets] = useState(() => {
+    try {
+      const saved = localStorage.getItem('work_tracker_widgets');
+      // Migration: If old layout key exists or format is different, use default
+      return saved ? JSON.parse(saved) : ['chart-weekly', 'chart-task', 'entry-form', 'entries-list'];
+    } catch {
+      return ['chart-weekly', 'chart-task', 'entry-form', 'entries-list'];
+    }
+  });
+
+  // Widget Sizes State (Column Widths: 1-12, Height: px)
+  const [widgetSizes, setWidgetSizes] = useState(() => {
+    try {
+      const saved = localStorage.getItem('work_tracker_sizes');
+      if (!saved) {
+        return {
+          'chart-weekly': { w: 7, h: 400 },
+          'chart-task': { w: 5, h: 400 },
+          'entry-form': { w: 4, h: 'auto' },
+          'entries-list': { w: 8, h: 'auto' }
+        };
+      }
+
+      const parsed = JSON.parse(saved);
+      // Migration: Convert old scalar numbers to objects if needed
+      const migrated = {};
+      Object.keys(parsed).forEach(key => {
+        if (typeof parsed[key] === 'number') {
+          migrated[key] = { w: parsed[key], h: 400 }; // Default height for migration
+        } else {
+          migrated[key] = parsed[key];
+        }
+      });
+      return migrated;
+    } catch {
+      return {
+        'chart-weekly': { w: 7, h: 400 },
+        'chart-task': { w: 5, h: 400 },
+        'entry-form': { w: 4, h: 'auto' },
+        'entries-list': { w: 8, h: 'auto' }
+      };
+    }
+  });
+
+  const sensors = useSensors(
+    useSensor(PointerSensor, {
+      activationConstraint: {
+        distance: 8, // Fix: Require 8px movement before drag starts, allows clicking buttons/toggles
+      },
+    }),
+    useSensor(KeyboardSensor, {
+      coordinateGetter: sortableKeyboardCoordinates,
+    })
+  );
+
+  const handleDragEnd = (event) => {
+    const { active, over } = event;
+    if (active.id !== over.id) {
+      setWidgets((items) => {
+        const oldIndex = items.indexOf(active.id);
+        const newIndex = items.indexOf(over.id);
+        const newOrder = arrayMove(items, oldIndex, newIndex);
+        localStorage.setItem('work_tracker_widgets', JSON.stringify(newOrder));
+        return newOrder;
+      });
+    }
+  };
+
+  const handleResize = (id) => {
+    setWidgetSizes(prev => {
+      const current = prev[id] || { w: 6, h: 'auto' };
+      const currentW = current.w;
+
+      // Cycle sizes: 4 -> 6 -> 8 -> 12 -> 4
+      let nextW = 6;
+      if (currentW === 4) nextW = 6;
+      else if (currentW === 6) nextW = 8;
+      else if (currentW === 8) nextW = 12;
+      else if (currentW === 12) nextW = 4;
+      else nextW = 6;
+
+      const newSizes = { ...prev, [id]: { ...current, w: nextW } };
+      localStorage.setItem('work_tracker_sizes', JSON.stringify(newSizes));
+      return newSizes;
+    });
+  };
+
+  const handleResizeHeight = (id) => {
+    setWidgetSizes(prev => {
+      const current = prev[id] || { w: 6, h: 'auto' };
+      const currentH = current.h;
+
+      // Cycle heights: auto -> 300 -> 500 -> 700 -> auto
+      let nextH = 'auto';
+      if (currentH === 'auto') nextH = 400;
+      else if (currentH === 400) nextH = 600;
+      else if (currentH === 600) nextH = 800;
+      else nextH = 'auto';
+
+      console.log(`Resizing height for ${id}: ${currentH} -> ${nextH}`); // Debug Log
+
+      const newSizes = { ...prev, [id]: { ...current, h: nextH } };
+      localStorage.setItem('work_tracker_sizes', JSON.stringify(newSizes));
+      return newSizes;
+    });
+  };
+
+  const renderWidget = (id) => {
+    switch (id) {
+      case 'chart-weekly':
+        return <WeeklyActivityChart entries={entries} />;
+      case 'chart-task':
+        return <TaskDistributionChart entries={entries} />;
+      case 'entry-form':
+        return <WorkEntryForm onSave={handleAddEntry} />;
+      case 'entries-list':
+        return <WorkDashboard entries={entries} onDelete={handleDeleteEntry} onEdit={setEditingEntry} />;
+      default:
+        return null;
+    }
+  };
 
   // Modals
   const [showClearConfirm, setShowClearConfirm] = useState(false);
@@ -93,6 +232,22 @@ function App() {
     StorageService.exportToJson(currentUser);
   };
 
+  const handleImport = async (e) => {
+    const file = e.target.files[0];
+    if (!file) return;
+
+    try {
+      const count = await StorageService.importFromExcel(currentUser, file);
+      setEntries(StorageService.load(currentUser));
+      alert(`Successfully imported ${count} entries.`);
+    } catch (error) {
+      console.error("Import failed:", error);
+      alert("Failed to import data. Please check the file format.");
+    }
+    // Reset file input
+    e.target.value = '';
+  };
+
   // --- Render ---
 
   if (!currentUser) {
@@ -108,11 +263,14 @@ function App() {
   return (
     <div className="min-vh-100 d-flex flex-column fade-in">
       {/* Navbar */}
-      <Navbar className="mb-5 pt-4 bg-transparent">
-        <Container style={{ maxWidth: '800px' }}>
+      <Navbar className="mb-4 pt-4 bg-transparent">
+        <Container fluid="lg">
           <Navbar.Brand className="fw-bold fs-4 d-flex align-items-center text-dark">
-            <span className="text-gradient">Work Tracker</span>
-            <span className="ms-2 badge bg-light text-secondary fw-normal small shadow-sm">{currentUser}</span>
+            <span className="text-gradient fw-extrabold fs-3">Work Tracker</span>
+            <span className="ms-3 badge-glass fw-normal small shadow-sm text-uppercase d-flex align-items-center gap-2">
+              <span className="d-inline-block rounded-circle bg-success" style={{ width: 8, height: 8 }}></span>
+              {currentUser}
+            </span>
           </Navbar.Brand>
           <div className="d-flex gap-2">
             <div>
@@ -125,7 +283,7 @@ function App() {
               />
               <Button
                 variant="white"
-                className="text-secondary border-0 shadow-sm"
+                className="text-secondary border-0 shadow-sm glass-card px-3"
                 size="sm"
                 onClick={() => document.getElementById('import-excel').click()}
                 title="Import Excel"
@@ -135,7 +293,7 @@ function App() {
             </div>
             <Button
               variant="white"
-              className="text-secondary border-0 shadow-sm"
+              className="text-secondary border-0 shadow-sm glass-card px-3"
               size="sm"
               onClick={() => setShowExportModal(true)}
               title="Export"
@@ -144,7 +302,7 @@ function App() {
             </Button>
             <Button
               variant="white"
-              className="text-danger border-0 shadow-sm opacity-50 hover-opacity-100"
+              className="text-danger border-0 shadow-sm glass-card opacity-75 hover-opacity-100 px-3"
               size="sm"
               onClick={() => { setDeletePasskey(''); setDeleteError(''); setShowClearConfirm(true); }}
               title="Delete All"
@@ -153,7 +311,7 @@ function App() {
             </Button>
             <Button
               variant="white"
-              className="text-secondary border-0 shadow-sm ms-2"
+              className="text-secondary border-0 shadow-sm glass-card ms-2 px-3"
               size="sm"
               onClick={handleLogout}
               title="Logout"
@@ -165,12 +323,38 @@ function App() {
       </Navbar>
 
       {/* Main Content */}
-      <Container className="flex-grow-1" style={{ maxWidth: '800px' }}>
-        <div className="fade-in-up">
-          <WorkEntryForm onSave={handleAddEntry} />
-          <div className="my-5">
-            <WorkDashboard entries={entries} onDelete={handleDeleteEntry} onEdit={setEditingEntry} />
-          </div>
+      <Container className="flex-grow-1" fluid="lg">
+        <div className="fade-in-up pb-5">
+          <DndContext
+            sensors={sensors}
+            collisionDetection={closestCenter}
+            onDragEnd={handleDragEnd}
+          >
+            <SortableContext
+              items={widgets}
+              strategy={rectSortingStrategy}
+            >
+              <Row>
+                {widgets.map((id) => (
+                  <Col
+                    key={id}
+                    lg={widgetSizes[id]?.w || 6}
+                    md={12}
+                    className="mb-4"
+                  >
+                    <SortableItem
+                      id={id}
+                      height={widgetSizes[id]?.h}
+                      onResize={() => handleResize(id)}
+                      onResizeHeight={() => handleResizeHeight(id)}
+                    >
+                      {renderWidget(id)}
+                    </SortableItem>
+                  </Col>
+                ))}
+              </Row>
+            </SortableContext>
+          </DndContext>
         </div>
       </Container>
 

@@ -33,24 +33,29 @@ export function WorkEntryForm({ onSave }) {
     };
 
     return (
-        <Card className="card-glass mb-5 border-0">
-            <Card.Body className="p-4">
+        <React.Fragment>
+            <div className="glass-panel p-4 mb-5">
                 <Form onSubmit={handleSubmit}>
-                    <div className="d-flex align-items-center mb-3">
-                        <h6 className="text-secondary fw-bold small m-0 letter-spacing-1">NEW ENTRY</h6>
+                    <div className="d-flex align-items-center mb-4">
+                        <div className="p-2 rounded-circle bg-white bg-opacity-50 me-3 shadow-sm">
+                            <Plus size={20} className="text-primary" />
+                        </div>
+                        <h6 className="text-dark fw-bold small m-0 letter-spacing-1">NEW ENTRY</h6>
                     </div>
                     <Row className="g-3">
-                        <Col md={3}>
+                        <Col md={4}>
+                            <Form.Label className="small text-muted fw-bold ps-1">Date</Form.Label>
                             <Form.Control
                                 type="date"
                                 name="date"
                                 value={formData.date}
                                 onChange={handleChange}
                                 required
-                                className="input-modern bg-white text-dark fw-medium"
+                                className="glass-input"
                             />
                         </Col>
-                        <Col md={7}>
+                        <Col md={6}>
+                            <Form.Label className="small text-muted fw-bold ps-1">Task</Form.Label>
                             <Form.Control
                                 type="text"
                                 name="task"
@@ -58,10 +63,11 @@ export function WorkEntryForm({ onSave }) {
                                 value={formData.task}
                                 onChange={handleChange}
                                 required
-                                className="input-modern bg-white text-dark fw-medium"
+                                className="glass-input"
                             />
                         </Col>
                         <Col md={2}>
+                            <Form.Label className="small text-muted fw-bold ps-1">Hours</Form.Label>
                             <Form.Control
                                 type="number"
                                 step="0.25"
@@ -70,34 +76,32 @@ export function WorkEntryForm({ onSave }) {
                                 value={formData.hours}
                                 onChange={handleChange}
                                 required
-                                className="input-modern bg-white text-dark fw-medium"
+                                className="glass-input"
                             />
                         </Col>
                         <Col md={12}>
                             <Form.Control
                                 as="textarea"
-                                rows={1}
+                                rows={2}
                                 name="details"
                                 placeholder="Add details (optional)..."
                                 value={formData.details}
                                 onChange={handleChange}
-                                className="input-modern bg-white text-muted"
+                                className="glass-input"
                                 style={{ resize: 'none' }}
                             />
                         </Col>
-                        <Col md={12} className="d-flex justify-content-end mt-3">
+                        <Col md={12} className="d-flex justify-content-end mt-2">
                             <Button
-                                variant="primary"
                                 type="submit"
-                                className="px-4 py-2 fw-medium d-flex align-items-center text-white shadow-sm"
-                                style={{ borderRadius: '8px' }}
+                                className="btn-glass-primary px-4 py-2 d-flex align-items-center"
                             >
-                                <Plus size={18} className="me-1" /> Add Entry
+                                <Plus size={18} className="me-2" /> Add Entry
                             </Button>
                         </Col>
                     </Row>
                 </Form>
-            </Card.Body>
-        </Card>
+            </div>
+        </React.Fragment>
     );
 }

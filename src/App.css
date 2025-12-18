@@ -1,66 +1,81 @@
 /* App Specific Overrides */
-
 .navbar-brand {
-  font-weight: 700;
+  font-weight: 800;
   letter-spacing: -0.5px;
+  color: var(--text-main) !important;
 }
 
-.table-modern {
-  background: transparent;
+/* Glass Chart Container */
+.chart-container-glass {
+  background: rgba(255, 255, 255, 0.5);
+  backdrop-filter: blur(16px);
+  border: 1px solid rgba(255, 255, 255, 0.4);
+  border-radius: 1.5rem;
+  padding: 1.5rem;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
 }
 
-.table-modern thead th {
-  background: transparent;
-  border-bottom: 2px solid #e2e8f0;
-  color: var(--text-muted);
-  font-size: 0.8rem;
+/* Tables */
+.table-glass {
+  --bs-table-bg: transparent;
+  --bs-table-hover-bg: rgba(255, 255, 255, 0.3);
+}
+
+.table-glass th {
+  font-weight: 600;
   text-transform: uppercase;
-  letter-spacing: 0.5px;
+  font-size: 0.75rem;
+  letter-spacing: 0.05em;
+  color: var(--text-muted);
+  border-bottom: 2px solid rgba(0, 0, 0, 0.05);
   padding-bottom: 1rem;
 }
 
-.table-modern tbody td {
-  background: transparent;
-  border-bottom: 1px solid #f1f5f9;
-  padding: 1rem 0.5rem;
-  color: var(--text-dark);
+.table-glass td {
   vertical-align: middle;
+  padding: 1rem 0.5rem;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.03);
+  color: var(--text-main);
 }
 
-.table-modern tbody tr:last-child td {
+.table-glass tr:last-child td {
   border-bottom: none;
 }
 
-.badge-soft {
-  background: rgba(99, 102, 241, 0.1);
-  color: var(--primary-color);
-  padding: 0.4em 0.8em;
-  border-radius: 6px;
-  font-weight: 600;
+/* Accordion Glass Override */
+.accordion-glass .accordion-item {
+  background: rgba(255, 255, 255, 0.4);
+  border: 1px solid rgba(255, 255, 255, 0.5);
+  margin-bottom: 1rem;
+  border-radius: 1rem;
+  overflow: hidden;
+  backdrop-filter: blur(5px);
 }
 
-.accordion-item {
+.accordion-glass .accordion-button {
   background: transparent;
-  border: none;
-}
-
-.accordion-button {
-  background: transparent !important;
-  box-shadow: none !important;
-  padding: 1.25rem 0;
+  box-shadow: none;
   font-weight: 600;
-  color: var(--text-dark);
+  padding: 1.25rem 1.5rem;
+  color: var(--text-main);
 }
 
-.accordion-button:not(.collapsed) {
+.accordion-glass .accordion-button:not(.collapsed) {
+  background: transparent;
   color: var(--primary-color);
+  box-shadow: inset 0 -1px 0 rgba(0, 0, 0, 0.05);
+  /* Subtle separator */
 }
 
-.accordion-button::after {
-  background-size: 1rem;
-  opacity: 0.5;
+.accordion-glass .accordion-body {
+  background: rgba(255, 255, 255, 0.15);
 }
 
-.accordion-body {
-  padding: 0;
+.badge-glass {
+  background: rgba(6, 182, 212, 0.15);
+  color: var(--primary-hover);
+  padding: 0.35rem 0.75rem;
+  border-radius: 2rem;
+  font-weight: 600;
+  font-size: 0.85rem;
 }

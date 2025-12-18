@@ -35,19 +35,21 @@ export function WorkDashboard({ entries, onDelete, onEdit }) {
 
     return (
         <div className="fade-in">
-            <Accordion defaultActiveKey={groupedEntries.length > 0 ? groupedEntries[0].date : null} alwaysOpen className="border-0">
+            <Accordion defaultActiveKey={groupedEntries.length > 0 ? groupedEntries[0].date : null} alwaysOpen className="accordion-glass border-0">
                 {groupedEntries.map((group) => (
-                    <Accordion.Item eventKey={group.date} key={group.date} className="mb-4 card-glass border-0 overflow-hidden">
-                        <Accordion.Header className="accordion-modern-header px-2">
+                    <Accordion.Item eventKey={group.date} key={group.date} className="overflow-hidden shadow-sm">
+                        <Accordion.Header className="px-2">
                             <div className="d-flex w-100 justify-content-between align-items-center pe-3">
-                                <span className="fw-bold fs-5 text-dark">{group.date}</span>
-                                <span className="badge badge-soft">
+                                <span className="fw-bold fs-5 text-dark">
+                                    {new Date(group.date).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' })}
+                                </span>
+                                <span className="badge-glass">
                                     {group.items.reduce((sum, i) => sum + (Number(i.hours) || 0), 0)} hrs
                                 </span>
                             </div>
                         </Accordion.Header>
-                        <Accordion.Body className="bg-transparent">
-                            <Table hover className="mb-0 table-modern" responsive>
+                        <Accordion.Body>
+                            <Table hover className="mb-0 table-glass" responsive>
                                 <thead>
                                     <tr>
                                         <th style={{ width: '40%' }}>Task</th>
