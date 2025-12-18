@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
 import { Modal, Button, Form, Row, Col } from 'react-bootstrap';
-import { Download } from 'lucide-react';
+import { Download, FileJson } from 'lucide-react';
 
-export function ExportModal({ show, onHide, onExport, availableTasks = [] }) {
+export function ExportModal({ show, onHide, onExport, onExportJson, availableTasks = [] }) {
     const today = new Date().toISOString().split('T')[0];
     const [startDate, setStartDate] = useState(today);
     const [endDate, setEndDate] = useState(today);
@@ -12,6 +12,13 @@ export function ExportModal({ show, onHide, onExport, availableTasks = [] }) {
         // If empty, we pass empty array which logic treats as "All"
         onExport(startDate, endDate, selectedTasks);
         onHide();
+    };
+
+    const handleExportJson = () => {
+        if (onExportJson) {
+            onExportJson();
+            onHide();
+        }
     };
 
     const toggleTask = (task) => {
@@ -25,7 +32,7 @@ export function ExportModal({ show, onHide, onExport, availableTasks = [] }) {
     return (
         <Modal show={show} onHide={onHide} centered>
             <Modal.Header closeButton className="border-0 pb-0">
-                <Modal.Title className="fw-bold fs-5">Export to Excel</Modal.Title>
+                <Modal.Title className="fw-bold fs-5">Export Work Log</Modal.Title>
             </Modal.Header>
             <Modal.Body className="pt-2">
                 <p className="text-muted small mb-4">Select the filters for your work log export.</p>
@@ -78,6 +85,10 @@ export function ExportModal({ show, onHide, onExport, availableTasks = [] }) {
             <Modal.Footer className="border-0 pt-0">
                 <Button variant="link" className="text-muted text-decoration-none" onClick={onHide}>
                     Cancel
+                </Button>
+                <Button variant="outline-dark" onClick={handleExportJson} className="fw-bold px-3 me-2 shadow-sm">
+                    <FileJson size={16} className="me-2" />
+                    Export JSON
                 </Button>
                 <Button variant="success" onClick={handleExport} className="fw-bold px-4 shadow-sm">
                     <Download size={16} className="me-2" />

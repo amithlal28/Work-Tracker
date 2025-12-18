@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useMemo } from 'react';
 import { Container, Navbar, Button, Modal, Form } from 'react-bootstrap';
-import { Download, Trash2, LogOut, KeyRound } from 'lucide-react';
+import { Download, Trash2, LogOut, KeyRound, Upload } from 'lucide-react';
 import { StorageService } from './services/storage';
 import { WorkEntryForm } from './components/WorkEntryForm';
 import { WorkDashboard } from './components/WorkDashboard';
@@ -88,6 +88,11 @@ function App() {
     StorageService.exportToExcel(currentUser, startDate, endDate, selectedTasks);
   };
 
+  const handleExportJson = () => {
+    if (!currentUser) return;
+    StorageService.exportToJson(currentUser);
+  };
+
   // --- Render ---
 
   if (!currentUser) {
@@ -110,6 +115,24 @@ function App() {
             <span className="ms-2 badge bg-light text-secondary fw-normal small shadow-sm">{currentUser}</span>
           </Navbar.Brand>
           <div className="d-flex gap-2">
+            <div>
+              <input
+                type="file"
+                accept=".xlsx, .xls"
+                id="import-excel"
+                style={{ display: 'none' }}
+                onChange={handleImport}
+              />
+              <Button
+                variant="white"
+                className="text-secondary border-0 shadow-sm"
+                size="sm"
+                onClick={() => document.getElementById('import-excel').click()}
+                title="Import Excel"
+              >
+                <Upload size={18} />
+              </Button>
+            </div>
             <Button
               variant="white"
               className="text-secondary border-0 shadow-sm"
@@ -156,6 +179,7 @@ function App() {
         show={showExportModal}
         onHide={() => setShowExportModal(false)}
         onExport={handleExport}
+        onExportJson={handleExportJson}
         availableTasks={uniqueTasks}
       />
 

@@ -33,7 +33,7 @@ export function WorkEntryForm({ onSave }) {
     };
 
     return (
-        <Card className="border-0 shadow-sm mb-5" style={{ borderRadius: '12px' }}>
+        <Card className="card-glass mb-5 border-0">
             <Card.Body className="p-4">
                 <Form onSubmit={handleSubmit}>
                     <div className="d-flex align-items-center mb-3">
@@ -47,8 +47,7 @@ export function WorkEntryForm({ onSave }) {
                                 value={formData.date}
                                 onChange={handleChange}
                                 required
-                                className="border-0 bg-light fw-medium px-3 py-2"
-                                style={{ borderRadius: '8px' }}
+                                className="input-modern bg-white text-dark fw-medium"
                             />
                         </Col>
                         <Col md={7}>
@@ -59,8 +58,7 @@ export function WorkEntryForm({ onSave }) {
                                 value={formData.task}
                                 onChange={handleChange}
                                 required
-                                className="border-0 bg-light fw-medium px-3 py-2"
-                                style={{ borderRadius: '8px' }}
+                                className="input-modern bg-white text-dark fw-medium"
                             />
                         </Col>
                         <Col md={2}>
@@ -72,8 +70,7 @@ export function WorkEntryForm({ onSave }) {
                                 value={formData.hours}
                                 onChange={handleChange}
                                 required
-                                className="border-0 bg-light fw-medium px-3 py-2"
-                                style={{ borderRadius: '8px' }}
+                                className="input-modern bg-white text-dark fw-medium"
                             />
                         </Col>
                         <Col md={12}>
@@ -84,18 +81,18 @@ export function WorkEntryForm({ onSave }) {
                                 placeholder="Add details (optional)..."
                                 value={formData.details}
                                 onChange={handleChange}
-                                className="border-0 bg-white px-0 py-2 text-muted"
-                                style={{ resize: 'none', borderBottom: '1px solid #eee' }}
+                                className="input-modern bg-white text-muted"
+                                style={{ resize: 'none' }}
                             />
                         </Col>
                         <Col md={12} className="d-flex justify-content-end mt-3">
                             <Button
-                                variant="dark"
+                                variant="primary"
                                 type="submit"
-                                className="px-4 py-2 fw-medium d-flex align-items-center"
+                                className="px-4 py-2 fw-medium d-flex align-items-center text-white shadow-sm"
                                 style={{ borderRadius: '8px' }}
                             >
-                                <Plus size={18} className="me-1" /> Add
+                                <Plus size={18} className="me-1" /> Add Entry
                             </Button>
                         </Col>
                     </Row>

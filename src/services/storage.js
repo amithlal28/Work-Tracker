@@ -161,7 +161,7 @@ export const StorageService = {
     return [];
   },
 
-  exportToExcel: (username, startDate, endDate) => {
+  exportToExcel: (username, startDate, endDate, selectedTasks = []) => {
     const data = StorageService.load(username);
 
     const filteredData = data.filter(item => {
@@ -173,11 +173,18 @@ export const StorageService = {
       const itemDay = new Date(itemDate);
       itemDay.setHours(12, 0, 0, 0);
 
-      return itemDay >= start && itemDay <= end;
+      const dateInRange = itemDay >= start && itemDay <= end;
+
+      // If selectedTasks is empty or contains "All" (conceptually), we show all.
+      // But typically UI passes [] for all? Or we check length.
+      // Logic: If selectedTasks has items, require match.
+      const taskMatch = selectedTasks.length === 0 || selectedTasks.includes(item.task);
+
+      return dateInRange && taskMatch;
     });
 
     if (filteredData.length === 0) {
-      alert("No data found for the selected date range.");
+      alert("No data found for the selected criteria.");
       return;
     }
 
@@ -197,5 +204,63 @@ export const StorageService = {
 
     const filename = `WorkLog_${username}_${startDate}_to_${endDate}.xlsx`;
     XLSX.writeFile(workbook, filename);
+  },
+
+  exportToJson: (username) => {
+    const data = StorageService.load(username);
+    if (!data || data.length === 0) {
+      alert("No data found to export.");
+      return;
+    }
+    const jsonString = JSON.stringify(data, null, 2);
+    const blob = new Blob([jsonString], { type: "application/json" });
+    const url = URL.createObjectURL(blob);
+    const link = document.createElement('a');
+    link.href = url;
+    link.download = `WorkLog_${username}_${new Date().toISOString().split('T')[0]}.json`;
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+  },
+
+  importFromExcel: async (username, file) => {
+    return new Promise((resolve, reject) => {
+      const reader = new FileReader();
+      reader.onload = (e) => {
+        try {
+          const data = new Uint8Array(e.target.result);
+          const workbook = XLSX.read(data, { type: 'array' });
+          const firstSheetName = workbook.SheetNames[0];
+          const worksheet = workbook.Sheets[firstSheetName];
+          const jsonData = XLSX.utils.sheet_to_json(worksheet);
+
+          let importedCount = 0;
+          jsonData.forEach(row => {
+            // Start Basic Validation
+            if (!row.Date || !row.Task) return; // Skip invalid rows or total row
+            if (row.Date === 'Total') return;
+
+            // Create Entry
+            const newEntry = {
+              id: uuidv4(),
+              createdAt: new Date().toISOString(),
+              date: row.Date,
+              task: row.Task,
+              hours: row.Hours || 0,
+              details: row.Details || ''
+            };
+
+            // Add directly to storage (appending)
+            StorageService.addEntry(username, newEntry);
+            importedCount++;
+          });
+          resolve(importedCount);
+        } catch (error) {
+          reject(error);
+        }
+      };
+      reader.onerror = (error) => reject(error);
+      reader.readAsArrayBuffer(file);
+    });
   }
 };
