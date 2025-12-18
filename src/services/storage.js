@@ -8,28 +8,43 @@ const DEFAULT_USER = 'Amith';
 const DEFAULT_PASSKEY = 'cosmos';
 
 const SEED_DATA = [
-  // Substance Load (03 Dec - 05 Dec)
-  { date: '2025-12-03', task: 'Substance Load', hours: 3, details: 'Created custom fields and loaded list types with required values' },
-  { date: '2025-12-03', task: 'Substance Load', hours: 2, details: 'Troubleshot SDK error (Name not passed in CAS, CAS Number issue)' },
-  { date: '2025-12-04', task: 'Substance Load', hours: 1, details: 'Edited existing fields and created new fields' },
-  { date: '2025-12-04', task: 'Substance Load', hours: 3, details: 'Developed test script for Substance Load' },
-  { date: '2025-12-05', task: 'Substance Load', hours: 5, details: 'Created load script for Substance Load' },
-  { date: '2025-12-05', task: 'Substance Load', hours: 3, details: 'Troubleshot SDK for updating existing CAS' },
-  { date: '2025-12-05', task: 'Substance Load', hours: 3, details: 'Tested APIs for updating existing CAS' },
-  { date: '2025-12-05', task: 'Substance Load', hours: 6, details: 'Reworked load script to include APIs with SDK (hybrid approach)' },
-  { date: '2025-12-05', task: 'Substance Load', hours: 4, details: 'Executed Substance Load' },
-
-  // Raw Materials Load (09 Dec - 12 Dec)
-  { date: '2025-12-09', task: 'Raw Materials Load', hours: 4, details: 'Created/updated custom fields and loaded list types' },
-  { date: '2025-12-09', task: 'Raw Materials Load', hours: 5, details: 'Discussions on dataset and load logic' },
-  { date: '2025-12-10', task: 'Raw Materials Load', hours: 3, details: 'Troubleshot target parameter (inventory value in CAS)' },
-  { date: '2025-12-10', task: 'Raw Materials Load', hours: 2, details: 'Resolved issue with large inventory name search' },
-  { date: '2025-12-11', task: 'Raw Materials Load', hours: 6, details: 'Developed test script for Material Load' },
-  { date: '2025-12-11', task: 'Raw Materials Load', hours: 5, details: 'Created load script for Material Load' },
-  { date: '2025-12-12', task: 'Raw Materials Load', hours: 4, details: 'Investigated category field implementation in CAS' },
-  { date: '2025-12-12', task: 'Raw Materials Load', hours: 2, details: 'Updated load script to include category implementation' },
-  { date: '2025-12-12', task: 'Raw Materials Load', hours: 1, details: 'Modified raw material name in load script' },
-  { date: '2025-12-12', task: 'Raw Materials Load', hours: 8, details: 'Executed Raw Material Load (7,837 materials)' },
+  { date: "2025-12-03", task: "Clorox-Substance Load", hours: 3, details: "Created custom fields and loaded list types with required values" },
+  { date: "2025-12-03", task: "Clorox-Substance Load", hours: 2, details: "Troubleshot SDK error (Name not passed in CAS, CAS Number issue)" },
+  { date: "2025-12-03", task: "Clorox-Substance Load", hours: 1, details: "Edited existing fields and created new fields" },
+  { date: "2025-12-04", task: "Clorox-Substance Load", hours: 3, details: "Developed test script for Substance Load" },
+  { date: "2025-12-04", task: "Clorox-Substance Load", hours: 5, details: "Created load script for Substance Load" },
+  { date: "2025-12-04", task: "Clorox-Substance Load", hours: 3, details: "Troubleshot SDK for updating existing CAS" },
+  { date: "2025-12-05", task: "Clorox-Substance Load", hours: 3, details: "Tested APIs for updating existing CAS" },
+  { date: "2025-12-05", task: "Clorox-Substance Load", hours: 6, details: "Reworked load script to include APIs with SDK (hybrid approach)" },
+  { date: "2025-12-05", task: "Clorox-Substance Load", hours: 4, details: "Executed Substance Load" },
+  { date: "2025-12-09", task: "Clorox-Raw Materials Load", hours: 4, details: "Created/updated custom fields and loaded list types" },
+  { date: "2025-12-09", task: "Clorox-Raw Materials Load", hours: 5, details: "Discussions on dataset and load logic" },
+  { date: "2025-12-10", task: "Clorox-Raw Materials Load", hours: 3, details: "Troubleshot target parameter (inventory value in CAS)" },
+  { date: "2025-12-10", task: "Clorox-Raw Materials Load", hours: 2, details: "Resolved issue with large inventory name search" },
+  { date: "2025-12-11", task: "Clorox-Raw Materials Load", hours: 6, details: "Developed test script for Material Load" },
+  { date: "2025-12-11", task: "Clorox-Raw Materials Load", hours: 5, details: "Created load script for Material Load" },
+  { date: "2025-12-12", task: "Clorox-Raw Materials Load", hours: 4, details: "Investigated category field implementation in CAS" },
+  { date: "2025-12-12", task: "Clorox-Raw Materials Load", hours: 2, details: "Updated load script to include category implementation" },
+  { date: "2025-12-12", task: "Clorox-Raw Materials Load", hours: 1, details: "Modified raw material name in load script" },
+  { date: "2025-12-12", task: "Clorox-Raw Materials Load", hours: 4, details: "Executed Raw Material Load (4000 materials)" },
+  { date: "2025-12-15", task: "Clorox-Raw Materials Load", hours: 3, details: "Reviewed Errors and Made fixes for the failed raw materials." },
+  { date: "2025-12-15", task: "Avient - DT Load", hours: 3, details: "Reviewing Dataset and Cleaning before Test Load" },
+  { date: "2025-12-15", task: "Clorox-Raw Materials Load", hours: 4, details: "Executed Raw Material Load (3,837 materials)" },
+  { date: "2025-12-16", task: "Avient - DT Load", hours: 1, details: "Modifying Load Script" },
+  { date: "2025-12-16", task: "Avient - DT Load", hours: 2, details: "Issues with missing Standards support in SDK" },
+  { date: "2025-12-16", task: "Avient - DT Load", hours: 2, details: "Testing Standards APIs" },
+  { date: "2025-12-16", task: "Avient - DT Load", hours: 4, details: "Created Hybrid Script For data Load Including Standards APIs." },
+  { date: "2025-12-17", task: "Avient - DT Load", hours: 1, details: "Test Load for DT" },
+  { date: "2025-12-17", task: "Avient - DT Load", hours: 2, details: "Data Template Load and Review" },
+  { date: "2025-12-17", task: "Clorox-Formulas Load", hours: 2, details: "Reviewing Formulas Creation Sheet" },
+  { date: "2025-12-17", task: "Clorox-Formulas Load", hours: 2, details: "Creating and Updating CustomFields with Values" },
+  { date: "2025-12-18", task: "Clorox-Formulas Load", hours: 2, details: "Creating Test Load Script" },
+  { date: "2025-12-18", task: "Clorox-Formulas Load", hours: 1, details: "Testing Formulas Loads" },
+  { date: "2025-12-18", task: "Clorox-Formulas Load", hours: 3, details: "Creating Load Script" },
+  { date: "2025-12-18", task: "Clorox-Formulas Load", hours: 3, details: "Troubleshooting on Circular referencing of Formulas in the Dataset." },
+  { date: "2025-12-19", task: "Clorox-Formulas Load", hours: 1, details: "Adjusting the Dataset to avoid the load of Circular referencing." },
+  { date: "2025-12-19", task: "Clorox-Formulas Load", hours: 1.5, details: "Modifying the Load Script for updated Load Script" },
+  { date: "2025-12-19", task: "Clorox-Raw Materials Load", hours: 2, details: "Formula Load and Review" }
 ];
 
 export const StorageService = {
@@ -80,18 +95,31 @@ export const StorageService = {
       StorageService.createUser('admin', 'cosmos');
     }
 
-    // Seed Default User
+    // Seed Default User (Create if not exists)
     if (!users[DEFAULT_USER]) {
       StorageService.createUser(DEFAULT_USER, DEFAULT_PASSKEY);
+    }
 
-      // Seed Data
-      const entries = SEED_DATA.map(item => ({
-        id: uuidv4(),
-        createdAt: new Date().toISOString(),
-        ...item
-      }));
-      StorageService.save(DEFAULT_USER, entries);
-      console.log(`Seeded user ${DEFAULT_USER} with ${entries.length} entries.`);
+    // Force Load/Merge Seed Data (Ensure this data always exists)
+    const currentData = StorageService.load(DEFAULT_USER);
+    const existingIds = new Set(currentData.map(d => d.task + d.date + d.details)); // Simple dedup key
+
+    let addedCount = 0;
+    SEED_DATA.forEach(item => {
+      const key = item.task + item.date + item.details;
+      if (!existingIds.has(key)) {
+        currentData.push({
+          id: uuidv4(),
+          createdAt: new Date().toISOString(),
+          ...item
+        });
+        addedCount++;
+      }
+    });
+
+    if (addedCount > 0) {
+      StorageService.save(DEFAULT_USER, currentData);
+      console.log(`Seeded user ${DEFAULT_USER} with ${addedCount} new entries.`);
     }
   },
 
