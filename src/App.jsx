@@ -118,25 +118,6 @@ function App() {
     });
   };
 
-  const handleResizeHeight = (id) => {
-    setWidgetSizes(prev => {
-      const current = prev[id] || { w: 6, h: 'auto' };
-      const currentH = current.h;
-
-      // Cycle heights: auto -> 300 -> 500 -> 700 -> auto
-      let nextH = 'auto';
-      if (currentH === 'auto') nextH = 400;
-      else if (currentH === 400) nextH = 600;
-      else if (currentH === 600) nextH = 800;
-      else nextH = 'auto';
-
-      console.log(`Resizing height for ${id}: ${currentH} -> ${nextH}`); // Debug Log
-
-      const newSizes = { ...prev, [id]: { ...current, h: nextH } };
-      localStorage.setItem('work_tracker_sizes', JSON.stringify(newSizes));
-      return newSizes;
-    });
-  };
 
   const renderWidget = (id) => {
     switch (id) {
@@ -346,7 +327,6 @@ function App() {
                       id={id}
                       height={widgetSizes[id]?.h}
                       onResize={() => handleResize(id)}
-                      onResizeHeight={() => handleResizeHeight(id)}
                     >
                       {renderWidget(id)}
                     </SortableItem>
@@ -356,19 +336,20 @@ function App() {
             </SortableContext>
           </DndContext>
         </div>
-      </Container>
+      </Container >
 
       {/* Export Modal */}
-      <ExportModal
+      < ExportModal
         show={showExportModal}
-        onHide={() => setShowExportModal(false)}
+        onHide={() => setShowExportModal(false)
+        }
         onExport={handleExport}
         onExportJson={handleExportJson}
         availableTasks={uniqueTasks}
       />
 
       {/* Edit Entry Modal */}
-      <EditEntryModal
+      < EditEntryModal
         show={!!editingEntry}
         onHide={() => setEditingEntry(null)}
         entry={editingEntry}
@@ -376,7 +357,7 @@ function App() {
       />
 
       {/* Secure Clear Data Modal */}
-      <Modal show={showClearConfirm} onHide={() => setShowClearConfirm(false)} centered>
+      < Modal show={showClearConfirm} onHide={() => setShowClearConfirm(false)} centered >
         <Modal.Header className="border-0 pb-0">
           <Modal.Title className="fs-5 fw-bold text-danger">Clear User Space</Modal.Title>
         </Modal.Header>
@@ -405,8 +386,8 @@ function App() {
             </div>
           </Form>
         </Modal.Body>
-      </Modal>
-    </div>
+      </Modal >
+    </div >
   );
 }
 

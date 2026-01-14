@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { useSortable } from '@dnd-kit/sortable';
 import { CSS } from '@dnd-kit/utilities';
-import { Maximize2, MoveVertical, GripHorizontal } from 'lucide-react';
+import { Maximize2, GripHorizontal } from 'lucide-react';
 import { Button } from 'react-bootstrap';
 
 export function SortableItem(props) {
@@ -75,25 +75,10 @@ export function SortableItem(props) {
                     </Button>
                 )}
 
-                {/* Height Resize Button */}
-                {props.onResizeHeight && (
-                    <Button
-                        variant="light"
-                        size="sm"
-                        className="rounded-circle shadow-sm border-0 d-flex align-items-center justify-content-center"
-                        style={{ width: '28px', height: '28px', padding: 0 }}
-                        onClick={(e) => {
-                            e.stopPropagation();
-                            props.onResizeHeight();
-                        }}
-                        title="Resize Height"
-                    >
-                        <MoveVertical size={14} className="text-secondary" />
-                    </Button>
-                )}
+
             </div>
 
-            <div className="h-100" style={{ overflowY: 'auto', overflowX: 'hidden' }} {...attributes} {...listeners}>
+            <div className="h-100" style={{ overflowY: 'auto', overflowX: 'hidden' }}>
                 {/* Added overflow-auto to respect fixed height with scroll */}
                 {props.children}
             </div>
