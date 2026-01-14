@@ -1,3 +1,4 @@
+// Work Tracker - Dashboard and Entry Management
 import React, { useState, useEffect, useMemo } from 'react';
 import { Container, Navbar, Button, Modal, Form, Row, Col } from 'react-bootstrap';
 import { Download, Trash2, LogOut, KeyRound, Upload } from 'lucide-react';
