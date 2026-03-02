@@ -1,0 +1,1114 @@
+[
+  {
+    "id": "cfbe7955-d2c9-47fa-b784-cdecb0bb79a9",
+    "createdAt": "2026-01-14T13:50:16.289Z",
+    "date": "2025-12-03",
+    "task": "Clorox-Substance Load",
+    "hours": 3,
+    "details": "Created custom fields and loaded list types with required values"
+  },
+  {
+    "id": "b42ac788-ea73-4e3d-960f-9745a607d4ae",
+    "createdAt": "2026-01-14T13:50:16.289Z",
+    "date": "2025-12-03",
+    "task": "Clorox-Substance Load",
+    "hours": 2,
+    "details": "Troubleshot SDK error (Name not passed in CAS, CAS Number issue)"
+  },
+  {
+    "id": "85c3f892-862e-4d83-a031-4741b5d8df3e",
+    "createdAt": "2026-01-14T13:50:16.289Z",
+    "date": "2025-12-03",
+    "task": "Clorox-Substance Load",
+    "hours": 1,
+    "details": "Edited existing fields and created new fields"
+  },
+  {
+    "id": "7bcd3f3f-f92b-45d7-a3e8-5b99d3d79834",
+    "createdAt": "2026-01-14T13:50:16.289Z",
+    "date": "2025-12-04",
+    "task": "Clorox-Substance Load",
+    "hours": 3,
+    "details": "Developed test script for Substance Load"
+  },
+  {
+    "id": "9dd66219-f785-447b-9441-3adade60cde9",
+    "createdAt": "2026-01-14T13:50:16.289Z",
+    "date": "2025-12-04",
+    "task": "Clorox-Substance Load",
+    "hours": 5,
+    "details": "Created load script for Substance Load"
+  },
+  {
+    "id": "eed3b33c-bad3-4c0f-a048-bc50517ce81b",
+    "createdAt": "2026-01-14T13:50:16.289Z",
+    "date": "2025-12-04",
+    "task": "Clorox-Substance Load",
+    "hours": 3,
+    "details": "Troubleshot SDK for updating existing CAS"
+  },
+  {
+    "id": "6a411c53-d4d6-4530-8232-4310020e0f80",
+    "createdAt": "2026-01-14T13:50:16.289Z",
+    "date": "2025-12-05",
+    "task": "Clorox-Substance Load",
+    "hours": 3,
+    "details": "Tested APIs for updating existing CAS"
+  },
+  {
+    "id": "d9b83d43-8b80-4abf-9e40-5da0538f7330",
+    "createdAt": "2026-01-14T13:50:16.289Z",
+    "date": "2025-12-05",
+    "task": "Clorox-Substance Load",
+    "hours": 6,
+    "details": "Reworked load script to include APIs with SDK (hybrid approach)"
+  },
+  {
+    "id": "0f7a0e42-e006-479d-8df1-f89b207cabaf",
+    "createdAt": "2026-01-14T13:50:16.289Z",
+    "date": "2025-12-05",
+    "task": "Clorox-Substance Load",
+    "hours": 4,
+    "details": "Executed Substance Load"
+  },
+  {
+    "id": "cf7de888-8de9-41be-b0b6-4d76ddb92415",
+    "createdAt": "2026-01-14T13:50:16.289Z",
+    "date": "2025-12-09",
+    "task": "Clorox-Raw Materials Load",
+    "hours": 4,
+    "details": "Created/updated custom fields and loaded list types"
+  },
+  {
+    "id": "b2193954-7dc2-4ed1-8781-d3690fc66614",
+    "createdAt": "2026-01-14T13:50:16.289Z",
+    "date": "2025-12-09",
+    "task": "Clorox-Raw Materials Load",
+    "hours": 5,
+    "details": "Discussions on dataset and load logic"
+  },
+  {
+    "id": "af97ca56-0911-425c-8c37-9793ca74d8bc",
+    "createdAt": "2026-01-14T13:50:16.289Z",
+    "date": "2025-12-10",
+    "task": "Clorox-Raw Materials Load",
+    "hours": 3,
+    "details": "Troubleshot target parameter (inventory value in CAS)"
+  },
+  {
+    "id": "c70dc7be-9ad9-424a-b22c-7ad2d1a7039c",
+    "createdAt": "2026-01-14T13:50:16.289Z",
+    "date": "2025-12-10",
+    "task": "Clorox-Raw Materials Load",
+    "hours": 2,
+    "details": "Resolved issue with large inventory name search"
+  },
+  {
+    "id": "f6e3c194-7f98-4809-b74f-26c6449bf0e6",
+    "createdAt": "2026-01-14T13:50:16.289Z",
+    "date": "2025-12-11",
+    "task": "Clorox-Raw Materials Load",
+    "hours": 6,
+    "details": "Developed test script for Material Load"
+  },
+  {
+    "id": "5e271641-4d04-4770-b272-946ffe1ba187",
+    "createdAt": "2026-01-14T13:50:16.289Z",
+    "date": "2025-12-11",
+    "task": "Clorox-Raw Materials Load",
+    "hours": 5,
+    "details": "Created load script for Material Load"
+  },
+  {
+    "id": "801bb5a5-3363-401e-aa6e-51b72a2ef957",
+    "createdAt": "2026-01-14T13:50:16.289Z",
+    "date": "2025-12-12",
+    "task": "Clorox-Raw Materials Load",
+    "hours": 4,
+    "details": "Investigated category field implementation in CAS"
+  },
+  {
+    "id": "058c6665-b942-4ac2-8868-1e2a9e6cba7e",
+    "createdAt": "2026-01-14T13:50:16.289Z",
+    "date": "2025-12-12",
+    "task": "Clorox-Raw Materials Load",
+    "hours": 2,
+    "details": "Updated load script to include category implementation"
+  },
+  {
+    "id": "650e5d82-ebbf-4d42-86aa-2a37a233fc48",
+    "createdAt": "2026-01-14T13:50:16.289Z",
+    "date": "2025-12-12",
+    "task": "Clorox-Raw Materials Load",
+    "hours": 1,
+    "details": "Modified raw material name in load script"
+  },
+  {
+    "id": "e9d77197-4c50-47bd-a863-b2c70cc9d538",
+    "createdAt": "2026-01-14T13:50:16.289Z",
+    "date": "2025-12-12",
+    "task": "Clorox-Raw Materials Load",
+    "hours": 4,
+    "details": "Executed Raw Material Load (4000 materials)"
+  },
+  {
+    "id": "fc96d53e-9543-4110-9c21-b75cf5cc1cc9",
+    "createdAt": "2026-01-14T13:50:16.289Z",
+    "date": "2025-12-15",
+    "task": "Clorox-Raw Materials Load",
+    "hours": 3,
+    "details": "Reviewed Errors and Made fixes for the failed raw materials."
+  },
+  {
+    "id": "f0cc0771-3947-46e7-b152-a4b9f5dbbdd3",
+    "createdAt": "2026-01-14T13:50:16.289Z",
+    "date": "2025-12-15",
+    "task": "Avient - DT Load",
+    "hours": 3,
+    "details": "Reviewing Dataset and Cleaning before Test Load"
+  },
+  {
+    "id": "6bb9d717-c1ec-4a57-a904-2b040c7d9f7b",
+    "createdAt": "2026-01-14T13:50:16.289Z",
+    "date": "2025-12-15",
+    "task": "Clorox-Raw Materials Load",
+    "hours": 4,
+    "details": "Executed Raw Material Load (3,837 materials)"
+  },
+  {
+    "id": "d333fb65-b3be-4163-9325-4ff43bd15609",
+    "createdAt": "2026-01-14T13:50:16.289Z",
+    "date": "2025-12-16",
+    "task": "Avient - DT Load",
+    "hours": 1,
+    "details": "Modifying Load Script"
+  },
+  {
+    "id": "5abfe6ec-88ac-4c69-bcba-2ae71921ecf6",
+    "createdAt": "2026-01-14T13:50:16.289Z",
+    "date": "2025-12-16",
+    "task": "Avient - DT Load",
+    "hours": 2,
+    "details": "Issues with missing Standards support in SDK"
+  },
+  {
+    "id": "b51103e0-2c04-4fc7-9b7b-15c08f9816b2",
+    "createdAt": "2026-01-14T13:50:16.289Z",
+    "date": "2025-12-16",
+    "task": "Avient - DT Load",
+    "hours": 2,
+    "details": "Testing Standards APIs"
+  },
+  {
+    "id": "c7d34e1a-3b0c-4224-bcc5-2dc0a094508e",
+    "createdAt": "2026-01-14T13:50:16.289Z",
+    "date": "2025-12-16",
+    "task": "Avient - DT Load",
+    "hours": 4,
+    "details": "Created Hybrid Script For data Load Including Standards APIs."
+  },
+  {
+    "id": "de900e6a-b1f9-4241-a131-b9371e284f5f",
+    "createdAt": "2026-01-14T13:50:16.289Z",
+    "date": "2025-12-17",
+    "task": "Avient - DT Load",
+    "hours": 1,
+    "details": "Test Load for DT"
+  },
+  {
+    "id": "af3dfc5e-580b-4ba2-96ad-42cf1e5de3ee",
+    "createdAt": "2026-01-14T13:50:16.289Z",
+    "date": "2025-12-17",
+    "task": "Avient - DT Load",
+    "hours": 2,
+    "details": "Data Template Load and Review"
+  },
+  {
+    "id": "c9bc08de-0148-4907-9614-e33cd5ad1a57",
+    "createdAt": "2026-01-14T13:50:16.289Z",
+    "date": "2025-12-17",
+    "task": "Clorox-Formulas Load",
+    "hours": 2,
+    "details": "Reviewing Formulas Creation Sheet"
+  },
+  {
+    "id": "c030d9dd-9c2e-4a45-a706-84e95cce836d",
+    "createdAt": "2026-01-14T13:50:16.289Z",
+    "date": "2025-12-17",
+    "task": "Clorox-Formulas Load",
+    "hours": 2,
+    "details": "Creating and Updating CustomFields with Values"
+  },
+  {
+    "id": "61adb3e8-4ca1-492d-90ed-048ea729d105",
+    "createdAt": "2026-01-14T13:50:16.289Z",
+    "date": "2025-12-18",
+    "task": "Clorox-Formulas Load",
+    "hours": 2,
+    "details": "Creating Test Load Script"
+  },
+  {
+    "id": "71d9fd04-6f70-4ca4-a536-02d2b47dda8c",
+    "createdAt": "2026-01-14T13:50:16.289Z",
+    "date": "2025-12-18",
+    "task": "Clorox-Formulas Load",
+    "hours": 1,
+    "details": "Testing Formulas Loads"
+  },
+  {
+    "id": "5adb8536-c802-4fdb-89dc-28c3bad8eea0",
+    "createdAt": "2026-01-14T13:50:16.289Z",
+    "date": "2025-12-18",
+    "task": "Clorox-Formulas Load",
+    "hours": 3,
+    "details": "Creating Load Script"
+  },
+  {
+    "id": "0068ca99-4ee6-4913-ad2a-68102abf3a21",
+    "createdAt": "2026-01-14T13:50:16.289Z",
+    "date": "2025-12-18",
+    "task": "Clorox-Formulas Load",
+    "hours": 3,
+    "details": "Troubleshooting on Circular referencing of Formulas in the Dataset."
+  },
+  {
+    "id": "1d9d503f-4ca0-49c9-8e0e-aeb296590dbe",
+    "createdAt": "2026-01-14T13:50:16.289Z",
+    "date": "2025-12-19",
+    "task": "Clorox-Formulas Load",
+    "hours": 1,
+    "details": "Adjusting the Dataset to avoid the load of Circular referencing."
+  },
+  {
+    "id": "24c41c5a-efd2-4583-9fd1-a2ae0cf2a992",
+    "createdAt": "2026-01-14T13:50:16.289Z",
+    "date": "2025-12-19",
+    "task": "Clorox-Formulas Load",
+    "hours": 1.5,
+    "details": "Modifying the Load Script for updated Load Script"
+  },
+  {
+    "id": "17cf21f9-8d70-438c-968d-0de2fd849481",
+    "createdAt": "2026-01-14T13:50:16.289Z",
+    "date": "2025-12-19",
+    "task": "Clorox-Raw Materials Load",
+    "hours": 2,
+    "details": "Formula Load and Review"
+  },
+  {
+    "id": "3c60f099-cb40-4480-b5f2-ee059bc5a76a",
+    "createdAt": "2026-01-14T13:59:34.055Z",
+    "date": "2026-01-06",
+    "task": "Marabu-Load",
+    "hours": 2,
+    "details": "Setting up remaining Load materials"
+  },
+  {
+    "id": "f1990c44-571c-4468-9b1f-39eba2388a50",
+    "createdAt": "2026-01-14T14:01:05.253Z",
+    "date": "2026-01-06",
+    "task": "Marabu-Load",
+    "hours": 5,
+    "details": "Updating CAS Extracts Scripts with Class , Category and SubCategory"
+  },
+  {
+    "id": "2266e015-8faa-4abd-be40-b1541e0fa7fa",
+    "createdAt": "2026-01-14T14:04:36.992Z",
+    "date": "2026-01-08",
+    "task": "Marabu-Load",
+    "hours": 7,
+    "details": "Preparing Test Load for Priority Groups Set 1.(Including Finding Valid CAS, Preparing Raw Materials , SDS Load Files, CAS File)"
+  },
+  {
+    "id": "4254e027-6d2d-49d8-b3bc-9ca06f47481c",
+    "createdAt": "2026-01-14T14:05:35.829Z",
+    "date": "2026-01-09",
+    "task": "Marabu-Load",
+    "hours": 2.5,
+    "details": "Loading Test Load for Priority Groups (Raw Material , SDS, CAS updated)"
+  },
+  {
+    "id": "05f3d094-4ef0-448a-a68f-4da55349b688",
+    "createdAt": "2026-01-14T14:06:15.639Z",
+    "date": "2026-01-12",
+    "task": "Marabu-Load",
+    "hours": 2,
+    "details": "Created new Schema for SDS Extraction and Testing"
+  },
+  {
+    "id": "f1d56455-2b5d-4489-a498-55e6ac8ca329",
+    "createdAt": "2026-01-14T14:08:31.508Z",
+    "date": "2026-01-13",
+    "task": "Marabu-Load",
+    "hours": 6,
+    "details": "Preparing Master Sheets for Priority Groups Set 2 and Set 3 (with newer CAS Classifications)"
+  },
+  {
+    "id": "4a64c805-38eb-405c-a80f-eac833c10b13",
+    "createdAt": "2026-01-14T14:11:20.456Z",
+    "date": "2026-01-13",
+    "task": "Marabu-Load",
+    "hours": 2,
+    "details": "Data Cleaning on Master File Extracts of Set 1. "
+  },
+  {
+    "id": "bc4c5485-f7a7-4a3b-a531-fc7105262116",
+    "createdAt": "2026-01-14T14:13:57.830Z",
+    "date": "2026-01-14",
+    "task": "Marabu-Load",
+    "hours": 2,
+    "details": "Loading Remaining Test Items and Misinterpreted Test Items with SDS and CAS."
+  },
+  {
+    "id": "e964247e-932b-463d-9b99-af9d3a336e53",
+    "createdAt": "2026-01-14T14:14:47.051Z",
+    "date": "2026-01-14",
+    "task": "Marabu-Load",
+    "hours": 4.25,
+    "details": "Data Cleaning on Master File Extracts of Set 2."
+  },
+  {
+    "id": "40b0ed0c-3f9d-48f0-ace2-559a6c6690ae",
+    "createdAt": "2026-01-14T14:17:11.482Z",
+    "date": "2026-01-14",
+    "task": "Marabu-Load",
+    "hours": 2,
+    "details": "Preparing Unique CAS Sheet across all the Sets."
+  },
+  {
+    "id": "da5d3fb8-1c8c-495b-a98b-0ad172ef7231",
+    "createdAt": "2026-01-20T09:19:21.725Z",
+    "date": "2026-01-15",
+    "task": "Marabu-Load",
+    "hours": 5,
+    "details": "Cleaning CAS files for Set 1 and Set 2"
+  },
+  {
+    "id": "dd18c0c5-5e78-43ff-95be-e97c27bf7c41",
+    "createdAt": "2026-01-20T09:20:47.589Z",
+    "date": "2026-01-19",
+    "task": "Avient- Biovia Migration",
+    "hours": 5,
+    "details": "Understanding different dataset structure required for Migration"
+  },
+  {
+    "id": "0c793b8d-5185-41b3-8164-097d476451ae",
+    "createdAt": "2026-01-20T09:21:47.758Z",
+    "date": "2026-01-19",
+    "task": "Avient- Biovia Migration",
+    "hours": 1,
+    "details": "Preparing Queries against the datasets for better clarity on the process"
+  },
+  {
+    "id": "9407e932-fbe9-40c4-b75a-378e6df16989",
+    "createdAt": "2026-01-21T09:01:58.309Z",
+    "date": "2026-01-20",
+    "task": "Avient- Biovia Migration",
+    "hours": 5,
+    "details": "Reviewing Raw Materials, finding duplicates and understanding issues from formulation-results-sem.csv"
+  },
+  {
+    "id": "524b299d-1f76-4e34-b41c-520fea66fdcf",
+    "createdAt": "2026-01-21T09:45:26.005Z",
+    "date": "2026-01-21",
+    "task": "Avient- Biovia Migration",
+    "hours": 3,
+    "details": "Finding RawMaterials having duplicates in albert and having no SAP ID."
+  },
+  {
+    "id": "57d09a97-44cc-467b-8362-0c200d03f1cd",
+    "createdAt": "2026-01-21T10:26:45.890Z",
+    "date": "2026-01-21",
+    "task": "Marabu-Load",
+    "hours": 2,
+    "details": "Creating List including Reference substance for Marabu Missing CAS"
+  },
+  {
+    "id": "82cb265b-d31d-4329-9601-0f6f89fec47a",
+    "createdAt": "2026-01-21T12:37:16.326Z",
+    "date": "2026-01-21",
+    "task": "Marabu-Load",
+    "hours": 3.5,
+    "details": "Preparing Load Priority Set 1 - CAS, Raw Material from PROD, SDS Upload File."
+  },
+  {
+    "id": "c1336b18-16e8-4209-8636-42412594f8b7",
+    "createdAt": "2026-01-21T15:44:16.596Z",
+    "date": "2026-01-21",
+    "task": "Marabu-Load",
+    "hours": 2,
+    "details": "Creating Load Sheet for Updating Existing Raw Materials in Marabu PROD."
+  },
+  {
+    "id": "584012cd-ad76-4012-aa7d-7d63cdada5aa",
+    "createdAt": "2026-01-22T08:42:15.880Z",
+    "date": "2026-01-22",
+    "task": "Marabu-Load",
+    "hours": 2,
+    "details": "Removing SDS and CAS for 175 materials in the PROD for updating."
+  },
+  {
+    "id": "1ddd782b-c798-42c8-8e88-dd0ec8e75ec8",
+    "createdAt": "2026-01-22T08:50:22.633Z",
+    "date": "2026-01-22",
+    "task": "Marabu-Load",
+    "hours": 0.5,
+    "details": "Creating remaining Safe Materials for Priority Set 1."
+  },
+  {
+    "id": "3f41d09a-de98-4a88-8dd6-d46ff839055d",
+    "createdAt": "2026-01-22T12:34:12.589Z",
+    "date": "2026-01-22",
+    "task": "Marabu-Load",
+    "hours": 2,
+    "details": "Updating CAS for 177 Materials\n"
+  },
+  {
+    "id": "30a1d05c-c41d-4de7-9a48-1a2e95c5efcb",
+    "createdAt": "2026-01-22T12:34:27.408Z",
+    "date": "2026-01-22",
+    "task": "Marabu-Load",
+    "hours": 2,
+    "details": "Updating SDS for 177 Materials\n"
+  },
+  {
+    "id": "a104a52f-c840-402a-82b7-c744bb2d63df",
+    "createdAt": "2026-01-22T12:35:21.138Z",
+    "date": "2026-01-22",
+    "task": "Marabu-Load",
+    "hours": 3,
+    "details": "Loading 5 Raw material into Sandbox having Subcategories"
+  },
+  {
+    "id": "80a7fa7f-bbb9-448d-b219-c54b4778442b",
+    "createdAt": "2026-01-22T14:54:58.244Z",
+    "date": "2026-01-22",
+    "task": "Clorox-Substance Load",
+    "hours": 0.5,
+    "details": "Meeting with Carol regarding Clorox Formulation Load"
+  },
+  {
+    "id": "6e34abf8-46fb-44bc-b00d-d5c11a515cbb",
+    "createdAt": "2026-01-22T14:55:59.499Z",
+    "date": "2026-01-20",
+    "task": "Avient- Biovia Migration",
+    "hours": 0.5,
+    "details": "Meeting with Carol : Avient Biovia Dataset Explanation"
+  },
+  {
+    "id": "a4e09c3a-f2a6-4952-9bfd-3f403bb39b29",
+    "createdAt": "2026-01-23T09:54:59.251Z",
+    "date": "2026-01-23",
+    "task": "Clorox-Substance Load",
+    "hours": 4,
+    "details": "Creating Test Script to Update Created Raw Materials with Substances."
+  },
+  {
+    "id": "71dd09b2-630b-4270-9707-a506d00bc073",
+    "createdAt": "2026-01-27T08:13:36.285Z",
+    "date": "2026-01-09",
+    "task": "Marabu-Load",
+    "hours": 5,
+    "details": "Preparing Unique List of CAS with Class, Category and Subcategory "
+  },
+  {
+    "id": "0c7dbf5c-9980-4ad2-9fb4-8bb940d5e43f",
+    "createdAt": "2026-01-27T10:16:41.166Z",
+    "date": "2026-01-12",
+    "task": "Marabu-Load",
+    "hours": 6,
+    "details": "Fetching the updated List of all the Inventories created and deleted from Production system (~1400)."
+  },
+  {
+    "id": "74d70563-045e-466d-91a6-06614d3faec0",
+    "createdAt": "2026-01-27T10:18:06.504Z",
+    "date": "2026-01-27",
+    "task": "Clorox-Raw Materials Load",
+    "hours": 4,
+    "details": "Setting up the Materials sheet for updating and creating the raw materials."
+  },
+  {
+    "id": "2938ebd8-a0b1-46b3-bf2b-b4af70ba9d7c",
+    "createdAt": "2026-01-27T14:04:33.861Z",
+    "date": "2026-01-27",
+    "task": "Clorox-Raw Materials Load",
+    "hours": 2.5,
+    "details": "Preparing update script for Existing materials and Testing."
+  },
+  {
+    "id": "a1c75187-9b1c-40a6-a010-2d8a24e9a121",
+    "createdAt": "2026-01-27T14:40:41.650Z",
+    "date": "2026-01-27",
+    "task": "Clorox-Raw Materials Load",
+    "hours": 2,
+    "details": "Preparing create script for Raw materials and Testing."
+  },
+  {
+    "id": "cd3255f8-1809-47b7-bd8a-49c09ed74fb1",
+    "createdAt": "2026-01-27T14:42:17.596Z",
+    "date": "2026-01-23",
+    "task": "Clorox-Substance Load",
+    "hours": 3,
+    "details": "Integrating Substance load with material creation script and Testing"
+  },
+  {
+    "id": "0506031f-58f6-4c24-bd6a-3631e926a484",
+    "createdAt": "2026-01-27T14:49:25.735Z",
+    "date": "2026-01-20",
+    "task": "Avient- Biovia Migration",
+    "hours": 3,
+    "details": "Evaluating Dataset Templates and Defining Logical Frameworks"
+  },
+  {
+    "id": "125820c4-8450-4269-b441-417070224c47",
+    "createdAt": "2026-01-28T07:50:50.136Z",
+    "date": "2026-01-28",
+    "task": "Clorox-Raw Materials Load",
+    "hours": 8,
+    "details": "Load : Updating existing Raw Materials.(7834  Materials)"
+  },
+  {
+    "id": "a9504c99-2c98-4734-ac7c-ac30970fe951",
+    "createdAt": "2026-01-28T08:17:42.961Z",
+    "date": "2026-01-28",
+    "task": "Marabu-Load",
+    "hours": 1,
+    "details": "Setup for loading 2 Materials into Production."
+  },
+  {
+    "id": "d04996c7-639b-4480-a818-80bc54e02e04",
+    "createdAt": "2026-01-28T11:53:55.112Z",
+    "date": "2026-01-29",
+    "task": "Clorox-Raw Materials Load",
+    "hours": 5,
+    "details": "\tLoad : Creating Raw Materials.(936 Materials)"
+  },
+  {
+    "id": "6a8fc5cb-17ac-450f-b829-a104f7c630de",
+    "createdAt": "2026-01-28T15:15:06.470Z",
+    "date": "2026-01-28",
+    "task": "Marabu-Load",
+    "hours": 1,
+    "details": "Discussions on the Missing CAS from Production and preparing Documents on that. "
+  },
+  {
+    "id": "58ac6780-2701-4068-9d0d-e0629efbe7cb",
+    "createdAt": "2026-01-28T15:15:41.388Z",
+    "date": "2026-01-28",
+    "task": "Marabu-Load",
+    "hours": 1.5,
+    "details": "Load: 2 Materials loaded with CAS and SDS in the system\n(Manual Verification done)"
+  },
+  {
+    "id": "c541f3fc-6992-47a2-a8dc-a9290f8cf012",
+    "createdAt": "2026-01-29T10:35:20.045Z",
+    "date": "2026-01-29",
+    "task": "Clorox-Formulas Load",
+    "hours": 1.5,
+    "details": "Reviewing Clorox Formula Dataset."
+  },
+  {
+    "id": "b7be23c3-976a-438c-b8ff-0414ea288f30",
+    "createdAt": "2026-01-30T09:23:32.157Z",
+    "date": "2026-01-29",
+    "task": "Clorox-Custom Fields",
+    "hours": 0.5,
+    "details": "Discussions with Carol on creating custom fields on QA"
+  },
+  {
+    "id": "03d614bb-c683-4b3a-99ba-97c92ed53fac",
+    "createdAt": "2026-01-30T09:24:21.456Z",
+    "date": "2026-01-30",
+    "task": "Clorox-Custom Fields",
+    "hours": 1,
+    "details": "Creating custom fields on Clorox QA - Substance Page"
+  },
+  {
+    "id": "3fe38704-1e7a-4ce0-b56e-fd9b813c5f82",
+    "createdAt": "2026-01-30T11:03:49.578Z",
+    "date": "2026-01-30",
+    "task": "Clorox-Custom Fields",
+    "hours": 1.5,
+    "details": "Reviewing Custom Fields on QA for Inventory Creation and RM Details Page. Preparing a Mapping Sheet with queries for Carol."
+  },
+  {
+    "id": "1a5a0d46-a312-4299-b81b-8f7feb69d2a8",
+    "createdAt": "2026-01-30T11:04:54.121Z",
+    "date": "2026-01-30",
+    "task": "Marabu-Load",
+    "hours": 0.5,
+    "details": "Fetching the List of all the CAS for Priority Set 1."
+  },
+  {
+    "id": "b7e5f604-ea18-435c-8da2-85e281f4e3b6",
+    "createdAt": "2026-01-30T11:06:39.849Z",
+    "date": "2026-01-30",
+    "task": "Marabu-Load",
+    "hours": 1.25,
+    "details": "Preparing Load : Remaining Load of Priority Set (186 Materials) "
+  },
+  {
+    "id": "f7aeba04-89cf-4c59-92e8-94e35447d995",
+    "createdAt": "2026-01-30T12:23:56.813Z",
+    "date": "2026-01-30",
+    "task": "Marabu-Load",
+    "hours": 1.5,
+    "details": "SDS Load data preparation."
+  },
+  {
+    "id": "e4ffa599-8d94-44ef-b648-36850ab6ec16",
+    "createdAt": "2026-01-30T14:22:56.673Z",
+    "date": "2026-01-30",
+    "task": "Marabu-Load",
+    "hours": 2,
+    "details": "Load: Updated CAS and SDS of 160 Remaining Material in set 1."
+  },
+  {
+    "id": "d1c01825-8e8a-4375-8dc5-ba0481a3c9c4",
+    "createdAt": "2026-02-03T08:17:42.729Z",
+    "date": "2026-02-02",
+    "task": "Clorox-Custom Fields",
+    "hours": 1.75,
+    "details": "Reviewing Clorox Custom Fields for RM Creation and Finalizing."
+  },
+  {
+    "id": "c2d70393-258a-496e-a67f-69b15262cbad",
+    "createdAt": "2026-02-03T08:18:11.986Z",
+    "date": "2026-02-02",
+    "task": "Clorox-Custom Fields",
+    "hours": 2,
+    "details": "Creating CustomFields for Clorox -RM Creation"
+  },
+  {
+    "id": "a00a30fb-0255-4390-90fa-595986de05a4",
+    "createdAt": "2026-02-03T08:18:37.865Z",
+    "date": "2026-02-02",
+    "task": "Clorox-Custom Fields",
+    "hours": 1,
+    "details": "Reviewing and Finalizing CF for Formula Page"
+  },
+  {
+    "id": "ab8692d8-0ee5-45bf-ac81-c2934ad26bd6",
+    "createdAt": "2026-02-03T08:18:58.305Z",
+    "date": "2026-02-02",
+    "task": "Clorox-Custom Fields",
+    "hours": 1.5,
+    "details": "Formula Details Custom Fields Creation\n"
+  },
+  {
+    "id": "f18f1e97-c785-434f-a649-9d47e50a123f",
+    "createdAt": "2026-02-03T08:19:32.617Z",
+    "date": "2026-02-02",
+    "task": "Clorox-Substance Load",
+    "hours": 2,
+    "details": "Updating scripts for Clorox Formula Load."
+  },
+  {
+    "id": "92beb195-33fd-4125-b0b2-6a3272aa112b",
+    "createdAt": "2026-02-03T08:20:00.203Z",
+    "date": "2026-02-03",
+    "task": "Clorox-Substance Load",
+    "hours": 1,
+    "details": "Loading Custom Fields with Values."
+  },
+  {
+    "id": "6a12f90a-a0af-44ba-844f-8bab5d0cfb95",
+    "createdAt": "2026-02-03T08:20:21.818Z",
+    "date": "2026-02-03",
+    "task": "Clorox-Substance Load",
+    "hours": 3,
+    "details": "Clorox Substance Load for QA"
+  },
+  {
+    "id": "7bc69dea-5b19-4eed-9862-bdfc2561ed9b",
+    "createdAt": "2026-02-03T09:34:40.166Z",
+    "date": "2026-02-02",
+    "task": "Clorox-Raw Materials Load",
+    "hours": 2,
+    "details": "Loading Custom Fields with Values in RM Details Page."
+  },
+  {
+    "id": "61bfd11c-e674-4938-9df7-63c9e103bc43",
+    "createdAt": "2026-02-03T15:09:36.387Z",
+    "date": "2026-02-03",
+    "task": "Clorox-Raw Materials Load",
+    "hours": 1,
+    "details": "Updating RM Creation scripts for QA RM Load"
+  },
+  {
+    "id": "5626a363-fd19-45bd-a511-e0606cf48fcc",
+    "createdAt": "2026-02-03T15:10:06.696Z",
+    "date": "2026-02-03",
+    "task": "Clorox-Raw Materials Load",
+    "hours": 6,
+    "details": "Clorox QA RM Load"
+  },
+  {
+    "id": "14d721a2-186f-412c-84ae-481925a29e4b",
+    "createdAt": "2026-02-04T06:01:29.672Z",
+    "date": "2026-02-04",
+    "task": "Clorox-Raw Materials Load",
+    "hours": 2,
+    "details": "Clorox QA RM Load 2"
+  },
+  {
+    "id": "c9831754-142d-4ff9-8f76-73e41e595f4f",
+    "createdAt": "2026-02-05T08:29:00.471Z",
+    "date": "2026-02-04",
+    "task": "Clorox-Raw Materials Load",
+    "hours": 1,
+    "details": "Review"
+  },
+  {
+    "id": "c50a98cf-6ea3-439e-87f5-fb11488cbf26",
+    "createdAt": "2026-02-05T08:29:38.137Z",
+    "date": "2026-02-04",
+    "task": "Avient- Biovia Migration",
+    "hours": 2,
+    "details": "Dataset Study"
+  },
+  {
+    "id": "17e73416-9f5c-4fcc-ac89-c5191d6ad726",
+    "createdAt": "2026-02-05T08:30:17.152Z",
+    "date": "2026-02-05",
+    "task": "Clorox-Custom Fields",
+    "hours": 1,
+    "details": "Fixing Custom Fields in Dev"
+  },
+  {
+    "id": "6da9a1ac-5b54-4825-8766-f54d34728595",
+    "createdAt": "2026-02-05T09:33:09.157Z",
+    "date": "2026-02-05",
+    "task": "Clorox-Custom Fields",
+    "hours": 2,
+    "details": "Creating Custom Fields for Tasks in QA."
+  },
+  {
+    "id": "64827e78-4751-429e-abca-22ee0a388d24",
+    "createdAt": "2026-02-06T09:22:54.519Z",
+    "date": "2026-02-05",
+    "task": "Clorox-Custom Fields",
+    "hours": 4,
+    "details": "Creating Custom Fields for CAS and Raw Material in Production"
+  },
+  {
+    "id": "1369d623-7909-49f5-bc1f-6d49feeaa20b",
+    "createdAt": "2026-02-06T09:24:03.737Z",
+    "date": "2026-02-06",
+    "task": "Marabu-Load",
+    "hours": 2.5,
+    "details": "Preparing Remaining SDS Metadata list Required and List for Missing CAS in Production"
+  },
+  {
+    "id": "01e31ad0-9ff8-4bcc-9f70-ca70842d655a",
+    "createdAt": "2026-02-10T12:18:11.580Z",
+    "date": "2026-02-06",
+    "task": "Clorox-Custom Fields",
+    "hours": 2,
+    "details": "Creating Custom Field for Formulas in Prod"
+  },
+  {
+    "id": "0a191e52-aa25-49d5-b78f-4bb4823e1f05",
+    "createdAt": "2026-02-10T12:18:55.779Z",
+    "date": "2026-02-06",
+    "task": "Clorox-Custom Fields",
+    "hours": 2,
+    "details": "Issues regarding Custom Fields requiring confirmation from Carol"
+  },
+  {
+    "id": "e9a2ebe1-3959-4b14-9199-f3224496d0a4",
+    "createdAt": "2026-02-10T12:19:51.278Z",
+    "date": "2026-02-09",
+    "task": "Clorox-Formulas Load",
+    "hours": 3,
+    "details": "Updating Formula Loads Scripts for QA and Testing in Dev"
+  },
+  {
+    "id": "1a81bbd6-95de-4666-98d5-1c8b592fa4ef",
+    "createdAt": "2026-02-10T12:21:00.517Z",
+    "date": "2026-02-09",
+    "task": "Clorox-Formulas Load",
+    "hours": 1,
+    "details": "Loading Formulas into QA"
+  },
+  {
+    "id": "59f94391-e967-4905-a915-b035c739219f",
+    "createdAt": "2026-02-10T12:21:23.781Z",
+    "date": "2026-02-09",
+    "task": "Clorox-Formulas Load",
+    "hours": 3,
+    "details": "Creating Detailed Report for Formula load issues. "
+  },
+  {
+    "id": "a5377f00-6c8f-4723-bd46-9b3d24a5df0e",
+    "createdAt": "2026-02-10T12:23:23.412Z",
+    "date": "2026-02-10",
+    "task": "Clorox-Formulas Load",
+    "hours": 0.5,
+    "details": "Meeting: Issues with circular dependencies on clorox. "
+  },
+  {
+    "id": "6081e9c5-0d13-4aaa-8a29-1ce388f90e5d",
+    "createdAt": "2026-02-10T12:24:01.235Z",
+    "date": "2026-02-10",
+    "task": "Clorox-Formulas Load",
+    "hours": 2.5,
+    "details": "Creating Variant Script (excluding Formulation Part) for Formula Load"
+  },
+  {
+    "id": "c898ba14-0f92-413e-abcf-5ce89d2593a0",
+    "createdAt": "2026-02-10T12:24:35.426Z",
+    "date": "2026-02-10",
+    "task": "Clorox-Formulas Load",
+    "hours": 3.25,
+    "details": "Load Formulas into Dev and creating report on the load"
+  },
+  {
+    "id": "717c4da2-15ef-40cc-8c8a-99a8cc552282",
+    "createdAt": "2026-02-12T10:52:16.407Z",
+    "date": "2026-02-11",
+    "task": "Marabu-Load",
+    "hours": 4,
+    "details": "Setting up Files Marabu Load for Priority Group Set 2 Safe Materials( CAS , SDS Files,  Metadata Files)"
+  },
+  {
+    "id": "3237c21e-0750-4f8f-b5a1-34d746ea668f",
+    "createdAt": "2026-02-12T10:52:44.305Z",
+    "date": "2026-02-11",
+    "task": "Marabu-Load",
+    "hours": 2,
+    "details": "Loading 138 Items into Production CAS and SDS"
+  },
+  {
+    "id": "af154276-66e5-4fce-8fb6-cd15a7b0d97b",
+    "createdAt": "2026-02-12T10:53:05.669Z",
+    "date": "2026-02-12",
+    "task": "Marabu-Load",
+    "hours": 3,
+    "details": "Setting up Files Marabu Load for Priority Group Set 3 Safe Materials( CAS , SDS Files, Metadata Files)"
+  },
+  {
+    "id": "9a30c934-60cc-4157-b373-ab1274220453",
+    "createdAt": "2026-02-12T10:53:41.875Z",
+    "date": "2026-02-12",
+    "task": "Marabu-Load",
+    "hours": 3,
+    "details": "Loading 312 Items into Production CAS and SDS"
+  },
+  {
+    "id": "fcfbe175-81d7-4bf0-bc63-ee8c76ef5004",
+    "createdAt": "2026-02-12T11:10:57.561Z",
+    "date": "2026-02-12",
+    "task": "Clorox-Formulas Load",
+    "hours": 1,
+    "details": "Reviewing Corrected FM Composition Sheet from Clorox "
+  },
+  {
+    "id": "3c938946-559f-441e-be6f-9b517e542c69",
+    "createdAt": "2026-02-12T11:11:05.649Z",
+    "date": "2026-02-12",
+    "task": "Clorox-Formulas Load",
+    "hours": 2,
+    "details": "Updating FM Load Logic scripts\n"
+  },
+  {
+    "id": "aa113ac9-f7ed-4f72-9faa-6782f289046d",
+    "createdAt": "2026-02-12T11:12:07.136Z",
+    "date": "2026-02-12",
+    "task": "Clorox-Formulas Load",
+    "hours": 2,
+    "details": "Formula Load in Dev and QA with Testing."
+  },
+  {
+    "id": "cacd56c4-27f0-47a2-851f-c99696478e30",
+    "createdAt": "2026-02-13T09:41:20.659Z",
+    "date": "2026-02-13",
+    "task": "Clorox-Custom Fields",
+    "hours": 0.5,
+    "details": "Meeting with Yadu and Carol regarding backward creation of custom fields from QA to DEV\n"
+  },
+  {
+    "id": "a83e94ce-1b4b-42a2-9632-8af7c7d57332",
+    "createdAt": "2026-02-13T09:42:52.526Z",
+    "date": "2026-02-13",
+    "task": "Marabu-Load",
+    "hours": 3,
+    "details": "Cleaning Priority Set 4 Master Data. Getting Unique CAS List "
+  },
+  {
+    "id": "e39afc2e-741f-4d5f-b984-05ce53384042",
+    "createdAt": "2026-02-16T08:09:13.111Z",
+    "date": "2026-02-13",
+    "task": "Marabu-Load",
+    "hours": 4,
+    "details": "Loading 271 Material CAS into production."
+  },
+  {
+    "id": "61a8de23-9a97-464e-a0cc-597a3c4d7e7d",
+    "createdAt": "2026-02-16T08:10:09.246Z",
+    "date": "2026-02-13",
+    "task": "Marabu-Load",
+    "hours": 2,
+    "details": "Preparing Sheets for Millena, Remaining SDS Sheets for Verification and Extraction"
+  },
+  {
+    "id": "1064a8ec-f215-4382-9c4a-545dca7056a5",
+    "createdAt": "2026-02-16T08:11:50.579Z",
+    "date": "2026-02-16",
+    "task": "Marabu-Load",
+    "hours": 3,
+    "details": "Creating Scripts to get unsafe materials without the missing/Incorrect CAS"
+  },
+  {
+    "id": "d599f9c6-76b3-4608-8190-180e0f8bb6c7",
+    "createdAt": "2026-02-16T08:12:01.994Z",
+    "date": "2026-02-16",
+    "task": "Marabu-Load",
+    "hours": 3,
+    "details": "Preparing Marabu Load for 328 Unsafe Materials"
+  },
+  {
+    "id": "16e830b7-fb03-43ae-a5fa-699f58e78367",
+    "createdAt": "2026-02-16T08:12:48.802Z",
+    "date": "2026-02-16",
+    "task": "Marabu-Load",
+    "hours": 3.5,
+    "details": "Loading 541 SDS Files for production Materials"
+  },
+  {
+    "id": "f0a50090-ed64-414c-8b22-023ddbb1623e",
+    "createdAt": "2026-02-16T08:13:42.719Z",
+    "date": "2026-02-16",
+    "task": "Marabu-Load",
+    "hours": 1.25,
+    "details": "Loading 59 SDS Files for production Material"
+  },
+  {
+    "id": "c6b5bf68-e09f-441c-a92f-38d63259adf3",
+    "createdAt": "2026-02-16T08:14:27.022Z",
+    "date": "2026-02-16",
+    "task": "Marabu-Load",
+    "hours": 2,
+    "details": "Preparing master list of CAS, HCODE, Category, SubCat, Class"
+  },
+  {
+    "id": "5d9352fe-b0c1-4a9a-a266-584203fec3bc",
+    "createdAt": "2026-02-16T13:42:18.311Z",
+    "date": "2026-02-16",
+    "task": "Marabu-Load",
+    "hours": 3.5,
+    "details": "Loading CAS and SDS for missing 37 items in Prod"
+  },
+  {
+    "id": "d6a98286-bfae-48f2-b302-ed306f0cb6e3",
+    "createdAt": "2026-02-17T14:00:19.883Z",
+    "date": "2026-02-17",
+    "task": "Clorox-Custom Fields",
+    "hours": 1,
+    "details": "Creating Custom Field Mapping QA->Dev"
+  },
+  {
+    "id": "6aa8885f-4842-4283-b96e-e159b4836647",
+    "createdAt": "2026-02-17T14:01:02.841Z",
+    "date": "2026-02-17",
+    "task": "Clorox-Custom Fields",
+    "hours": 2,
+    "details": "Creating Custom Fields for Formulas in Dev"
+  },
+  {
+    "id": "220bf806-c247-4455-bd84-eb1c6a2c3cc9",
+    "createdAt": "2026-02-17T14:03:17.122Z",
+    "date": "2026-02-17",
+    "task": "Linx",
+    "hours": 2,
+    "details": "Updating functionalities of Linx Specification Extractor."
+  },
+  {
+    "id": "aaac99de-2854-448d-b85b-d7dfdd3772dc",
+    "createdAt": "2026-02-17T14:03:56.668Z",
+    "date": "2026-02-17",
+    "task": "Clorox-Custom Fields",
+    "hours": 2,
+    "details": "Preparing remapping script for Formulas in Clorox"
+  },
+  {
+    "id": "623553a5-f22b-4521-a9a1-0fe7d19bdc1d",
+    "createdAt": "2026-02-18T08:16:25.116Z",
+    "date": "2026-02-18",
+    "task": "Clorox-Custom Fields",
+    "hours": 1,
+    "details": "Hiding Custom Fields in Formula Page -Dev"
+  },
+  {
+    "id": "baf8890d-85bd-4bd5-a238-ba87492ab851",
+    "createdAt": "2026-02-18T08:17:06.612Z",
+    "date": "2026-02-18",
+    "task": "Marabu-Load",
+    "hours": 1,
+    "details": "Updating 20 more safe materials out of 350"
+  },
+  {
+    "id": "749f8f05-f426-41f0-bdc8-159e57d0b03b",
+    "createdAt": "2026-02-19T14:43:03.837Z",
+    "date": "2026-02-19",
+    "task": "Clorox-Custom Fields",
+    "hours": 5,
+    "details": "Custom Field Migration for CAS Page in Dev"
+  },
+  {
+    "id": "00541946-80a4-46a4-bae8-72a88af73f94",
+    "createdAt": "2026-02-19T14:44:28.986Z",
+    "date": "2026-02-19",
+    "task": "Clorox-Custom Fields",
+    "hours": 2.75,
+    "details": "Custom Field Migration FM Page - Migration Script , Migration\n"
+  },
+  {
+    "id": "6c438039-21d7-485d-8199-e368931a3b1e",
+    "createdAt": "2026-02-19T14:46:10.663Z",
+    "date": "2026-02-19",
+    "task": "Clorox-Custom Fields",
+    "hours": 2,
+    "details": "\tCustom Field Migration RM Page - Creation "
+  },
+  {
+    "id": "8a72088b-c4fb-4a49-b251-2020b81a6b33",
+    "createdAt": "2026-02-23T14:06:41.992Z",
+    "date": "2026-02-20",
+    "task": "Marabu-Load",
+    "hours": 1,
+    "details": "Updating New CAS Data from production"
+  },
+  {
+    "id": "4ed49268-4c4a-44ea-b404-3af07dc6c198",
+    "createdAt": "2026-02-23T14:07:58.261Z",
+    "date": "2026-02-20",
+    "task": "Linx",
+    "hours": 6,
+    "details": "Changing Backend from GPT4ALL to Ollama . Most of the models are lacking required llama.cpp versions "
+  },
+  {
+    "id": "6f296059-5df8-47e2-80e3-f5e0f94096e2",
+    "createdAt": "2026-02-24T12:31:29.593Z",
+    "date": "2026-02-24",
+    "task": "Marabu-Load",
+    "hours": 6,
+    "details": "Updating CAS for 255 Items with incomplete/ incorrect CAS.\n"
+  },
+  {
+    "id": "8a224b36-d12b-4946-a2c3-9a1c5b397811",
+    "createdAt": "2026-03-02T07:25:46.002Z",
+    "date": "2026-02-27",
+    "task": "Marabu-Load",
+    "hours": 2,
+    "details": "Updating CAS for 64 Items"
+  },
+  {
+    "id": "c0943847-b693-4453-9466-14930b8b2939",
+    "createdAt": "2026-03-02T07:26:54.421Z",
+    "date": "2026-02-25",
+    "task": "Clorox-Custom Fields",
+    "hours": 5,
+    "details": "Updating CFs of materials from Clorox Dev Support (48k)."
+  }
+]

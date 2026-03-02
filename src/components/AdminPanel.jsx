@@ -13,8 +13,8 @@ export function AdminPanel({ onLogout }) {
         loadUsers();
     }, []);
 
-    const loadUsers = () => {
-        const userList = StorageService.getAllUsersList();
+    const loadUsers = async () => {
+        const userList = await StorageService.getAllUsersList();
         setUsers(userList);
     };
 
@@ -24,12 +24,12 @@ export function AdminPanel({ onLogout }) {
         setShowResetModal(true);
     };
 
-    const handleResetPasskey = (e) => {
+    const handleResetPasskey = async (e) => {
         e.preventDefault();
         if (selectedUser && newPasskey) {
-            StorageService.resetUserPasskey(selectedUser.username, newPasskey);
+            await StorageService.resetUserPasskey(selectedUser.username, newPasskey);
             setShowResetModal(false);
-            loadUsers(); // Refresh list (though passkeys are hidden, good practice)
+            loadUsers();
             alert(`Passkey for ${selectedUser.username} has been reset.`);
         }
     };

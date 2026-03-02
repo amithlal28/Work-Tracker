@@ -1,26 +1,20 @@
-// Work Tracker - Dashboard and Entry Management
+// Work Tracker - Main Application Component
 import React, { useState, useEffect, useMemo } from 'react';
-import { Container, Navbar, Button, Modal, Form, Row, Col } from 'react-bootstrap';
-import { Download, Trash2, LogOut, KeyRound, Upload } from 'lucide-react';
+import { Modal, Form, Button } from 'react-bootstrap';
 import {
-  DndContext,
-  closestCenter,
-  KeyboardSensor,
-  PointerSensor,
-  useSensor,
-  useSensors,
+  Download, Trash2, LogOut, KeyRound, Upload,
+  BriefcaseIcon, Clock, Calendar, ListChecks, BarChart2, Moon, Sun
+} from 'lucide-react';
+import {
+  DndContext, closestCenter, KeyboardSensor, PointerSensor, useSensor, useSensors,
 } from '@dnd-kit/core';
 import {
-  arrayMove,
-  SortableContext,
-  sortableKeyboardCoordinates,
-  rectSortingStrategy,
+  arrayMove, SortableContext, sortableKeyboardCoordinates, rectSortingStrategy,
 } from '@dnd-kit/sortable';
 import { StorageService } from './services/storage';
 import { WeeklyActivityChart, TaskDistributionChart } from './components/WorkCharts';
 import { WorkEntryForm } from './components/WorkEntryForm';
 import { WorkDashboard } from './components/WorkDashboard';
-import { SortableItem } from './components/SortableItem';
 import { ExportModal } from './components/ExportModal';
 import { EditEntryModal } from './components/EditEntryModal';
 import { LoginScreen } from './components/LoginScreen';
@@ -30,168 +24,68 @@ import './App.css';
 function App() {
   const [currentUser, setCurrentUser] = useState(null);
   const [entries, setEntries] = useState([]);
-
-  // Widget Order State
-  const [widgets, setWidgets] = useState(() => {
-    try {
-      const saved = localStorage.getItem('work_tracker_widgets');
-      // Migration: If old layout key exists or format is different, use default
-      return saved ? JSON.parse(saved) : ['chart-weekly', 'chart-task', 'entry-form', 'entries-list'];
-    } catch {
-      return ['chart-weekly', 'chart-task', 'entry-form', 'entries-list'];
-    }
+  const [darkMode, setDarkMode] = useState(() => {
+    return localStorage.getItem('work_tracker_theme') === 'dark';
   });
 
-  // Widget Sizes State (Column Widths: 1-12, Height: px)
-  const [widgetSizes, setWidgetSizes] = useState(() => {
-    try {
-      const saved = localStorage.getItem('work_tracker_sizes');
-      if (!saved) {
-        return {
-          'chart-weekly': { w: 7, h: 400 },
-          'chart-task': { w: 5, h: 400 },
-          'entry-form': { w: 4, h: 'auto' },
-          'entries-list': { w: 8, h: 'auto' }
-        };
-      }
+  // Apply dark mode to <html> element
+  useEffect(() => {
+    document.documentElement.setAttribute('data-theme', darkMode ? 'dark' : 'light');
+    localStorage.setItem('work_tracker_theme', darkMode ? 'dark' : 'light');
+  }, [darkMode]);
 
-      const parsed = JSON.parse(saved);
-      // Migration: Convert old scalar numbers to objects if needed
-      const migrated = {};
-      Object.keys(parsed).forEach(key => {
-        if (typeof parsed[key] === 'number') {
-          migrated[key] = { w: parsed[key], h: 400 }; // Default height for migration
-        } else {
-          migrated[key] = parsed[key];
-        }
-      });
-      return migrated;
-    } catch {
-      return {
-        'chart-weekly': { w: 7, h: 400 },
-        'chart-task': { w: 5, h: 400 },
-        'entry-form': { w: 4, h: 'auto' },
-        'entries-list': { w: 8, h: 'auto' }
-      };
-    }
-  });
+  const toggleTheme = () => setDarkMode(prev => !prev);
 
   const sensors = useSensors(
-    useSensor(PointerSensor, {
-      activationConstraint: {
-        distance: 8, // Fix: Require 8px movement before drag starts, allows clicking buttons/toggles
-      },
-    }),
-    useSensor(KeyboardSensor, {
-      coordinateGetter: sortableKeyboardCoordinates,
-    })
+    useSensor(PointerSensor, { activationConstraint: { distance: 8 } }),
+    useSensor(KeyboardSensor, { coordinateGetter: sortableKeyboardCoordinates })
   );
-
-  const handleDragEnd = (event) => {
-    const { active, over } = event;
-    if (active.id !== over.id) {
-      setWidgets((items) => {
-        const oldIndex = items.indexOf(active.id);
-        const newIndex = items.indexOf(over.id);
-        const newOrder = arrayMove(items, oldIndex, newIndex);
-        localStorage.setItem('work_tracker_widgets', JSON.stringify(newOrder));
-        return newOrder;
-      });
-    }
-  };
-
-  const handleResize = (id) => {
-    setWidgetSizes(prev => {
-      const current = prev[id] || { w: 6, h: 'auto' };
-      const currentW = current.w;
-
-      // Cycle sizes: 4 -> 6 -> 8 -> 12 -> 4
-      let nextW = 6;
-      if (currentW === 4) nextW = 6;
-      else if (currentW === 6) nextW = 8;
-      else if (currentW === 8) nextW = 12;
-      else if (currentW === 12) nextW = 4;
-      else nextW = 6;
-
-      const newSizes = { ...prev, [id]: { ...current, w: nextW } };
-      localStorage.setItem('work_tracker_sizes', JSON.stringify(newSizes));
-      return newSizes;
-    });
-  };
-
-
-  const renderWidget = (id) => {
-    switch (id) {
-      case 'chart-weekly':
-        return <WeeklyActivityChart entries={entries} />;
-      case 'chart-task':
-        return <TaskDistributionChart entries={entries} />;
-      case 'entry-form':
-        return <WorkEntryForm onSave={handleAddEntry} />;
-      case 'entries-list':
-        return <WorkDashboard entries={entries} onDelete={handleDeleteEntry} onEdit={setEditingEntry} />;
-      default:
-        return null;
-    }
-  };
 
   // Modals
   const [showClearConfirm, setShowClearConfirm] = useState(false);
   const [showExportModal, setShowExportModal] = useState(false);
   const [editingEntry, setEditingEntry] = useState(null);
-
-  // Clear Data Security
   const [deletePasskey, setDeletePasskey] = useState('');
   const [deleteError, setDeleteError] = useState('');
 
-  // Initial Seeding
-  useEffect(() => {
-    StorageService.initSeeding();
-  }, []);
+  useEffect(() => { StorageService.initSeeding(); }, []);
 
   useEffect(() => {
     if (currentUser && currentUser !== 'admin') {
-      setEntries(StorageService.load(currentUser));
+      StorageService.load(currentUser).then(setEntries);
     }
   }, [currentUser]);
 
-  const handleLogin = (username) => {
-    setCurrentUser(username);
-  };
+  const handleLogin = (username) => setCurrentUser(username);
+  const handleLogout = () => { setCurrentUser(null); setEntries([]); };
 
-  const handleLogout = () => {
-    setCurrentUser(null);
-    setEntries([]);
-  };
-
-  const handleAddEntry = (entry) => {
+  const handleAddEntry = async (entry) => {
     if (!currentUser) return;
-    StorageService.addEntry(currentUser, entry);
-    setEntries(StorageService.load(currentUser));
+    await StorageService.addEntry(currentUser, entry);
+    setEntries(await StorageService.load(currentUser));
   };
 
-  const handleDeleteEntry = (id) => {
+  const handleDeleteEntry = async (id) => {
     if (!currentUser) return;
-    if (confirm('Are you sure you want delete this entry?')) {
-      StorageService.deleteEntry(currentUser, id);
-      setEntries(StorageService.load(currentUser));
+    if (confirm('Are you sure you want to delete this entry?')) {
+      await StorageService.deleteEntry(currentUser, id);
+      setEntries(await StorageService.load(currentUser));
     }
   };
 
-  const handleUpdateEntry = (updatedEntry) => {
+  const handleUpdateEntry = async (updatedEntry) => {
     if (!currentUser) return;
-    StorageService.updateEntry(currentUser, updatedEntry);
-    setEntries(StorageService.load(currentUser));
+    await StorageService.updateEntry(currentUser, updatedEntry);
+    setEntries(await StorageService.load(currentUser));
     setEditingEntry(null);
   };
 
-  const handleClearData = (e) => {
+  const handleClearData = async (e) => {
     e.preventDefault();
     setDeleteError('');
-
-    // Verify passkey before deleting
-    if (StorageService.verifyUser(currentUser, deletePasskey)) {
-      StorageService.clear(currentUser);
+    const valid = await StorageService.verifyUser(currentUser, deletePasskey);
+    if (valid) {
+      await StorageService.clear(currentUser);
       setEntries([]);
       setShowClearConfirm(false);
       setDeletePasskey('');
@@ -200,176 +94,198 @@ function App() {
     }
   };
 
-  const uniqueTasks = useMemo(() => {
-    return [...new Set(entries.map(e => e.task))].sort();
-  }, [entries]);
-
-  const handleExport = (startDate, endDate, selectedTasks) => {
+  const handleExport = async (startDate, endDate, selectedTasks) => {
     if (!currentUser) return;
-    StorageService.exportToExcel(currentUser, startDate, endDate, selectedTasks);
+    await StorageService.exportToExcel(currentUser, startDate, endDate, selectedTasks);
   };
 
-  const handleExportJson = () => {
+  const handleExportJson = async () => {
     if (!currentUser) return;
-    StorageService.exportToJson(currentUser);
+    await StorageService.exportToJson(currentUser);
   };
 
   const handleImport = async (e) => {
     const file = e.target.files[0];
     if (!file) return;
-
     try {
       const count = await StorageService.importFromExcel(currentUser, file);
-      setEntries(StorageService.load(currentUser));
+      setEntries(await StorageService.load(currentUser));
       alert(`Successfully imported ${count} entries.`);
     } catch (error) {
       console.error("Import failed:", error);
       alert("Failed to import data. Please check the file format.");
     }
-    // Reset file input
     e.target.value = '';
   };
 
-  // --- Render ---
+  const uniqueTasks = useMemo(() => [...new Set(entries.map(e => e.task))].sort(), [entries]);
 
-  if (!currentUser) {
-    return <LoginScreen onLogin={handleLogin} />;
-  }
+  const stats = useMemo(() => {
+    const totalHours = entries.reduce((s, e) => s + (Number(e.hours) || 0), 0);
+    const taskCount = new Set(entries.map(e => e.task)).size;
+    const dates = [...new Set(entries.map(e => e.date))];
+    const avgPerDay = dates.length > 0 ? (totalHours / dates.length) : 0;
 
-  // Admin View
-  if (currentUser === 'admin') {
-    return <AdminPanel onLogout={handleLogout} />;
-  }
+    // This month
+    const now = new Date();
+    const monthEntries = entries.filter(e => {
+      const d = new Date(e.date);
+      return d.getMonth() === now.getMonth() && d.getFullYear() === now.getFullYear();
+    });
+    const monthHours = monthEntries.reduce((s, e) => s + (Number(e.hours) || 0), 0);
 
-  // User View
+    return { totalHours, taskCount, avgPerDay: avgPerDay.toFixed(1), monthHours };
+  }, [entries]);
+
+  // ─── Render ────────────────────────────────────────────────────
+  if (!currentUser) return <LoginScreen onLogin={handleLogin} />;
+  if (currentUser === 'admin') return <AdminPanel onLogout={handleLogout} />;
+
   return (
-    <div className="min-vh-100 d-flex flex-column fade-in">
-      {/* Navbar */}
-      <Navbar className="mb-4 pt-4 bg-transparent">
-        <Container fluid="lg">
-          <Navbar.Brand className="fw-bold fs-4 d-flex align-items-center text-dark">
-            <span className="text-gradient fw-extrabold fs-3">Work Tracker</span>
-            <span className="ms-3 badge-glass fw-normal small shadow-sm text-uppercase d-flex align-items-center gap-2">
-              <span className="d-inline-block rounded-circle bg-success" style={{ width: 8, height: 8 }}></span>
-              {currentUser}
-            </span>
-          </Navbar.Brand>
-          <div className="d-flex gap-2">
-            <div>
-              <input
-                type="file"
-                accept=".xlsx, .xls"
-                id="import-excel"
-                style={{ display: 'none' }}
-                onChange={handleImport}
-              />
-              <Button
-                variant="white"
-                className="text-secondary border-0 shadow-sm glass-card px-3"
-                size="sm"
-                onClick={() => document.getElementById('import-excel').click()}
-                title="Import Excel"
-              >
-                <Upload size={18} />
-              </Button>
+    <div className="app-shell fade-in">
+      {/* ── Topbar ── */}
+      <header className="app-topbar">
+        <div className="app-topbar-inner">
+          {/* Brand */}
+          <div className="brand">
+            <div className="brand-icon">
+              <BriefcaseIcon size={17} />
             </div>
-            <Button
-              variant="white"
-              className="text-secondary border-0 shadow-sm glass-card px-3"
-              size="sm"
-              onClick={() => setShowExportModal(true)}
-              title="Export"
-            >
-              <Download size={18} />
-            </Button>
-            <Button
-              variant="white"
-              className="text-danger border-0 shadow-sm glass-card opacity-75 hover-opacity-100 px-3"
-              size="sm"
-              onClick={() => { setDeletePasskey(''); setDeleteError(''); setShowClearConfirm(true); }}
-              title="Delete All"
-            >
-              <Trash2 size={18} />
-            </Button>
-            <Button
-              variant="white"
-              className="text-secondary border-0 shadow-sm glass-card ms-2 px-3"
-              size="sm"
-              onClick={handleLogout}
-              title="Logout"
-            >
-              <LogOut size={18} />
-            </Button>
+            <span className="brand-name">Work Tracker</span>
           </div>
-        </Container>
-      </Navbar>
 
-      {/* Main Content */}
-      <Container className="flex-grow-1" fluid="lg">
-        <div className="fade-in-up pb-5">
-          <DndContext
-            sensors={sensors}
-            collisionDetection={closestCenter}
-            onDragEnd={handleDragEnd}
-          >
-            <SortableContext
-              items={widgets}
-              strategy={rectSortingStrategy}
+          {/* Center: user + total */}
+          <div className="d-flex align-items-center gap-2">
+            <div className="user-pill">
+              <span className="user-dot" />
+              {currentUser}
+            </div>
+            <div className="total-pill">
+              <Clock size={13} />
+              {stats.totalHours.toFixed(1)} hrs total
+            </div>
+          </div>
+
+          {/* Actions */}
+          <div className="topbar-actions">
+            <input type="file" accept=".xlsx,.xls" id="import-excel" style={{ display: 'none' }} onChange={handleImport} />
+            <button className="icon-btn" onClick={() => document.getElementById('import-excel').click()} title="Import Excel">
+              <Upload size={16} />
+            </button>
+            <button className="icon-btn" onClick={() => setShowExportModal(true)} title="Export">
+              <Download size={16} />
+            </button>
+            <button
+              className="icon-btn danger"
+              onClick={() => { setDeletePasskey(''); setDeleteError(''); setShowClearConfirm(true); }}
+              title="Clear Data"
             >
-              <Row>
-                {widgets.map((id) => (
-                  <Col
-                    key={id}
-                    lg={widgetSizes[id]?.w || 6}
-                    md={12}
-                    className="mb-4"
-                  >
-                    <SortableItem
-                      id={id}
-                      height={widgetSizes[id]?.h}
-                      onResize={() => handleResize(id)}
-                    >
-                      {renderWidget(id)}
-                    </SortableItem>
-                  </Col>
-                ))}
-              </Row>
-            </SortableContext>
-          </DndContext>
+              <Trash2 size={16} />
+            </button>
+            <div style={{ width: 1, height: 22, background: 'var(--border)', margin: '0 4px' }} />
+            <button className="icon-btn" onClick={toggleTheme} title={darkMode ? 'Switch to Light Mode' : 'Switch to Dark Mode'}>
+              {darkMode ? <Sun size={16} /> : <Moon size={16} />}
+            </button>
+            <button className="icon-btn" onClick={handleLogout} title="Logout">
+              <LogOut size={16} />
+            </button>
+          </div>
         </div>
-      </Container >
+      </header>
 
-      {/* Export Modal */}
-      < ExportModal
+      {/* ── Body ── */}
+      <main className="app-body fade-in-up">
+
+        {/* Stats Row */}
+        <div className="stats-grid">
+          <div className="stat-card">
+            <div className="stat-icon" style={{ background: '#eff6ff' }}>
+              <Clock size={18} color="var(--primary)" />
+            </div>
+            <div className="stat-label">Total Hours</div>
+            <div className="stat-value">{stats.totalHours.toFixed(1)}</div>
+            <div className="stat-sub">across all tasks</div>
+          </div>
+          <div className="stat-card">
+            <div className="stat-icon" style={{ background: '#f0fdf4' }}>
+              <Calendar size={18} color="var(--emerald)" />
+            </div>
+            <div className="stat-label">This Month</div>
+            <div className="stat-value">{stats.monthHours.toFixed(1)}</div>
+            <div className="stat-sub">hours logged</div>
+          </div>
+          <div className="stat-card">
+            <div className="stat-icon" style={{ background: '#fefce8' }}>
+              <ListChecks size={18} color="var(--amber)" />
+            </div>
+            <div className="stat-label">Tasks</div>
+            <div className="stat-value">{stats.taskCount}</div>
+            <div className="stat-sub">unique projects</div>
+          </div>
+          <div className="stat-card">
+            <div className="stat-icon" style={{ background: '#fdf4ff' }}>
+              <BarChart2 size={18} color="var(--purple)" />
+            </div>
+            <div className="stat-label">Avg / Day</div>
+            <div className="stat-value">{stats.avgPerDay}</div>
+            <div className="stat-sub">hours worked</div>
+          </div>
+        </div>
+
+        {/* Entry Form */}
+        <WorkEntryForm onSave={handleAddEntry} existingTasks={uniqueTasks} />
+
+        {/* Charts Row */}
+        <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '1rem', marginBottom: '1rem' }}>
+          <div className="chart-container-glass">
+            <div style={{ fontSize: '0.82rem', fontWeight: 600, color: 'var(--text-3)', textTransform: 'uppercase', letterSpacing: '.06em', marginBottom: '1rem' }}>
+              Weekly Activity
+            </div>
+            <WeeklyActivityChart entries={entries} />
+          </div>
+          <div className="chart-container-glass">
+            <div style={{ fontSize: '0.82rem', fontWeight: 600, color: 'var(--text-3)', textTransform: 'uppercase', letterSpacing: '.06em', marginBottom: '1rem' }}>
+              Task Breakdown
+            </div>
+            <TaskDistributionChart entries={entries} />
+          </div>
+        </div>
+
+        {/* Work Log */}
+        <WorkDashboard entries={entries} onDelete={handleDeleteEntry} onEdit={setEditingEntry} />
+      </main>
+
+      {/* ── Modals ── */}
+      <ExportModal
         show={showExportModal}
-        onHide={() => setShowExportModal(false)
-        }
+        onHide={() => setShowExportModal(false)}
         onExport={handleExport}
         onExportJson={handleExportJson}
         availableTasks={uniqueTasks}
       />
 
-      {/* Edit Entry Modal */}
-      < EditEntryModal
+      <EditEntryModal
         show={!!editingEntry}
         onHide={() => setEditingEntry(null)}
         entry={editingEntry}
         onSave={handleUpdateEntry}
       />
 
-      {/* Secure Clear Data Modal */}
-      < Modal show={showClearConfirm} onHide={() => setShowClearConfirm(false)} centered >
+      <Modal show={showClearConfirm} onHide={() => setShowClearConfirm(false)} centered>
         <Modal.Header className="border-0 pb-0">
-          <Modal.Title className="fs-5 fw-bold text-danger">Clear User Space</Modal.Title>
+          <Modal.Title className="fs-5 fw-bold text-danger d-flex align-items-center gap-2">
+            <Trash2 size={18} />
+            Clear All Data
+          </Modal.Title>
         </Modal.Header>
         <Modal.Body className="pt-2">
           <p className="text-muted small mb-4">
-            This will permanently delete all your work logs. To confirm, please enter your <strong>passkey</strong>.
+            This will permanently delete all your work logs. Enter your <strong>passkey</strong> to confirm.
           </p>
           <Form onSubmit={handleClearData}>
             <Form.Group className="mb-3">
               <div className="position-relative">
-                <KeyRound size={16} className="position-absolute ms-3 top-50 translate-middle-y text-muted" />
+                <KeyRound size={15} className="position-absolute ms-3 top-50 translate-middle-y text-muted" />
                 <Form.Control
                   type="password"
                   className="input-modern ps-5"
@@ -387,8 +303,8 @@ function App() {
             </div>
           </Form>
         </Modal.Body>
-      </Modal >
-    </div >
+      </Modal>
+    </div>
   );
 }
 

@@ -30,70 +30,92 @@ export function ExportModal({ show, onHide, onExport, onExportJson, availableTas
     };
 
     return (
-        <Modal show={show} onHide={onHide} centered>
-            <Modal.Header closeButton className="border-0 pb-0">
-                <Modal.Title className="fw-bold fs-5">Export Work Log</Modal.Title>
+        <Modal show={show} onHide={onHide} centered size="lg" className="export-modal">
+            <Modal.Header closeButton className="border-0 pb-0 px-4 pt-4">
+                <Modal.Title className="fw-bold fs-4 text-dark d-flex align-items-center gap-2">
+                    <Download className="text-primary" size={24} />
+                    Export Work Log
+                </Modal.Title>
             </Modal.Header>
-            <Modal.Body className="pt-2">
-                <p className="text-muted small mb-4">Select the filters for your work log export.</p>
-                <Form>
-                    <Row className="g-3">
-                        <Col md={6}>
-                            <Form.Group>
-                                <Form.Label className="small fw-bold text-secondary">FROM</Form.Label>
-                                <Form.Control
-                                    type="date"
-                                    value={startDate}
-                                    onChange={(e) => setStartDate(e.target.value)}
-                                    className="shadow-sm border-0 bg-light"
-                                />
-                            </Form.Group>
-                        </Col>
-                        <Col md={6}>
-                            <Form.Group>
-                                <Form.Label className="small fw-bold text-secondary">TO</Form.Label>
-                                <Form.Control
-                                    type="date"
-                                    value={endDate}
-                                    onChange={(e) => setEndDate(e.target.value)}
-                                    className="shadow-sm border-0 bg-light"
-                                />
-                            </Form.Group>
-                        </Col>
-                        <Col md={12}>
-                            <Form.Group>
-                                <Form.Label className="small fw-bold text-secondary mb-2">TASKS (LEAVE EMPTY FOR ALL)</Form.Label>
-                                <div className="bg-light p-3 rounded shadow-sm border-0" style={{ maxHeight: '150px', overflowY: 'auto' }}>
-                                    {availableTasks.length === 0 && <span className="text-muted small">No tasks found.</span>}
-                                    {availableTasks.map((task, index) => (
-                                        <Form.Check
-                                            key={index}
-                                            type="checkbox"
-                                            id={`task-${index}`}
-                                            label={task}
-                                            checked={selectedTasks.includes(task)}
-                                            onChange={() => toggleTask(task)}
-                                            className="mb-2 small"
+            <Modal.Body className="px-4 pt-3 pb-4">
+                <p className="text-muted mb-4 fs-6">
+                    Filter your logged hours by date range and specific tasks to generate a customized report.
+                </p>
+
+                <div className="modern-card p-4 mb-4 bg-light border-0">
+                    <Form>
+                        <Row className="g-4">
+                            <Col md={6}>
+                                <Form.Group>
+                                    <Form.Label className="small fw-bold text-secondary mb-2">DATE RANGE</Form.Label>
+                                    <div className="d-flex align-items-center gap-2">
+                                        <Form.Control
+                                            type="date"
+                                            value={startDate}
+                                            onChange={(e) => setStartDate(e.target.value)}
+                                            className="input-modern shadow-sm"
                                         />
-                                    ))}
-                                </div>
-                            </Form.Group>
-                        </Col>
-                    </Row>
-                </Form>
+                                        <span className="text-muted fw-bold">to</span>
+                                        <Form.Control
+                                            type="date"
+                                            value={endDate}
+                                            onChange={(e) => setEndDate(e.target.value)}
+                                            className="input-modern shadow-sm"
+                                        />
+                                    </div>
+                                </Form.Group>
+                            </Col>
+
+                            <Col md={12}>
+                                <Form.Group>
+                                    <Form.Label className="small fw-bold text-secondary mb-2 d-flex justify-content-between">
+                                        <span>TASKS FILTER</span>
+                                        <span className="text-primary" style={{ cursor: 'pointer' }} onClick={() => setSelectedTasks([])}>Clear Filters</span>
+                                    </Form.Label>
+                                    <div className="task-filter-container p-3 rounded bg-white shadow-sm border border-subtle" style={{ maxHeight: '200px', overflowY: 'auto' }}>
+                                        {availableTasks.length === 0 ? (
+                                            <div className="text-center py-4 text-muted small">No tasks found in the selected date range.</div>
+                                        ) : (
+                                            <div className="d-flex flex-wrap gap-2">
+                                                {availableTasks.map((task, index) => {
+                                                    const isSelected = selectedTasks.includes(task) || selectedTasks.length === 0;
+                                                    return (
+                                                        <div
+                                                            key={index}
+                                                            onClick={() => toggleTask(task)}
+                                                            className={`task-pill px-3 py-2 rounded-pill small border transition-all ${isSelected ? 'bg-primary text-white border-primary fw-medium' : 'bg-white text-secondary border-subtle'} hover-active`}
+                                                            style={{ cursor: 'pointer', transition: 'all 0.2s', userSelect: 'none' }}
+                                                        >
+                                                            {task}
+                                                        </div>
+                                                    )
+                                                })}
+                                            </div>
+                                        )}
+                                    </div>
+                                    <Form.Text className="text-muted small mt-2">
+                                        <span className="fw-medium">Pro tip:</span> Leave all tasks unselected to include everything.
+                                    </Form.Text>
+                                </Form.Group>
+                            </Col>
+                        </Row>
+                    </Form>
+                </div>
             </Modal.Body>
-            <Modal.Footer className="border-0 pt-0">
-                <Button variant="link" className="text-muted text-decoration-none" onClick={onHide}>
+            <Modal.Footer className="border-0 px-4 pb-4 pt-0 d-flex justify-content-between">
+                <Button variant="link" className="text-secondary text-decoration-none fw-medium" onClick={onHide}>
                     Cancel
                 </Button>
-                <Button variant="outline-dark" onClick={handleExportJson} className="fw-bold px-3 me-2 shadow-sm">
-                    <FileJson size={16} className="me-2" />
-                    Export JSON
-                </Button>
-                <Button variant="success" onClick={handleExport} className="fw-bold px-4 shadow-sm">
-                    <Download size={16} className="me-2" />
-                    Download .xlsx
-                </Button>
+                <div className="d-flex gap-2">
+                    <Button variant="white" onClick={handleExportJson} className="d-flex align-items-center gap-2 fw-medium px-4 modern-btn-outline shadow-sm text-dark border-subtle">
+                        <FileJson size={18} className="text-accent" />
+                        JSON Format
+                    </Button>
+                    <Button variant="primary" onClick={handleExport} className="d-flex align-items-center gap-2 fw-medium px-4 shadow-sm btn-hover-lift">
+                        <Download size={18} />
+                        Excel Format
+                    </Button>
+                </div>
             </Modal.Footer>
         </Modal>
     );

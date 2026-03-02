@@ -1,8 +1,14 @@
 import { v4 as uuidv4 } from 'uuid';
 import * as XLSX from 'xlsx';
+import { db } from './firebase';
+import {
+  doc, getDoc, setDoc, updateDoc, deleteDoc,
+  collection, query, where, getDocs, writeBatch, addDoc
+} from 'firebase/firestore';
 
-const USERS_KEY = 'work_tracker_users'; // Stores { username: passkey }
-const DATA_KEY_PREFIX = 'work_tracker_data_';
+// ─── Firestore Collections ─────────────────────────────────────────────────────
+// /users/{username}  → { passkey: string }
+// /entries/{id}      → { username, date, task, hours, details, createdAt }
 
 const DEFAULT_USER = 'Amith';
 const DEFAULT_PASSKEY = 'cosmos';
@@ -48,68 +54,89 @@ const SEED_DATA = [
 ];
 
 export const StorageService = {
-  // --- Auth & User Management ---
+  // ─── Auth & User Management ──────────────────────────────────────────────────
 
-  getUsers: () => {
+  getUsers: async () => {
     try {
-      return JSON.parse(localStorage.getItem(USERS_KEY) || '{}');
+      const snapshot = await getDocs(collection(db, 'users'));
+      const users = {};
+      snapshot.forEach(d => { users[d.id] = d.data().passkey; });
+      return users;
     } catch {
       return {};
     }
   },
 
-  getAllUsersList: () => {
-    return Object.entries(StorageService.getUsers()).map(([username, passkey]) => ({ username, passkey }));
+  getAllUsersList: async () => {
+    try {
+      const snapshot = await getDocs(collection(db, 'users'));
+      return snapshot.docs.map(d => ({ username: d.id, passkey: d.data().passkey }));
+    } catch {
+      return [];
+    }
   },
 
-  createUser: (username, passkey) => {
-    const users = StorageService.getUsers();
-    if (users[username]) {
-      throw new Error("Username already exists");
+  createUser: async (username, passkey) => {
+    const userRef = doc(db, 'users', username);
+    const existing = await getDoc(userRef);
+    if (existing.exists()) {
+      throw new Error('Username already exists');
     }
-    users[username] = passkey;
-    localStorage.setItem(USERS_KEY, JSON.stringify(users));
+    await setDoc(userRef, { passkey });
     return true;
   },
 
-  verifyUser: (username, passkey) => {
-    const users = StorageService.getUsers();
-    return users[username] === passkey;
+  verifyUser: async (username, passkey) => {
+    try {
+      const userRef = doc(db, 'users', username);
+      const snap = await getDoc(userRef);
+      return snap.exists() && snap.data().passkey === passkey;
+    } catch {
+      return false;
+    }
   },
 
-  resetUserPasskey: (username, newPasskey) => {
-    const users = StorageService.getUsers();
-    if (users[username]) {
-      users[username] = newPasskey;
-      localStorage.setItem(USERS_KEY, JSON.stringify(users));
+  resetUserPasskey: async (username, newPasskey) => {
+    try {
+      const userRef = doc(db, 'users', username);
+      const snap = await getDoc(userRef);
+      if (!snap.exists()) return false;
+      await updateDoc(userRef, { passkey: newPasskey });
       return true;
+    } catch {
+      return false;
     }
-    return false;
   },
 
-  initSeeding: () => {
-    const users = StorageService.getUsers();
-
-    // Seed Admin
-    if (!users['admin']) {
-      StorageService.createUser('admin', 'cosmos');
+  initSeeding: async () => {
+    // Seed admin user
+    const adminRef = doc(db, 'users', 'admin');
+    const adminSnap = await getDoc(adminRef);
+    if (!adminSnap.exists()) {
+      await setDoc(adminRef, { passkey: 'cosmos' });
     }
 
-    // Seed Default User (Create if not exists)
-    if (!users[DEFAULT_USER]) {
-      StorageService.createUser(DEFAULT_USER, DEFAULT_PASSKEY);
+    // Seed default user
+    const userRef = doc(db, 'users', DEFAULT_USER);
+    const userSnap = await getDoc(userRef);
+    if (!userSnap.exists()) {
+      await setDoc(userRef, { passkey: DEFAULT_PASSKEY });
     }
 
-    // Force Load/Merge Seed Data (Ensure this data always exists)
-    const currentData = StorageService.load(DEFAULT_USER);
-    const existingIds = new Set(currentData.map(d => d.task + d.date + d.details)); // Simple dedup key
+    // Seed entries (only add missing ones)
+    const currentData = await StorageService.load(DEFAULT_USER);
+    const existingKeys = new Set(currentData.map(d => d.task + d.date + d.details));
 
+    const batch = writeBatch(db);
     let addedCount = 0;
+
     SEED_DATA.forEach(item => {
       const key = item.task + item.date + item.details;
-      if (!existingIds.has(key)) {
-        currentData.push({
-          id: uuidv4(),
+      if (!existingKeys.has(key)) {
+        const newRef = doc(collection(db, 'entries'));
+        batch.set(newRef, {
+          username: DEFAULT_USER,
+          id: newRef.id,
           createdAt: new Date().toISOString(),
           ...item
         });
@@ -118,79 +145,97 @@ export const StorageService = {
     });
 
     if (addedCount > 0) {
-      StorageService.save(DEFAULT_USER, currentData);
-      console.log(`Seeded user ${DEFAULT_USER} with ${addedCount} new entries.`);
+      await batch.commit();
+      console.log(`Seeded ${DEFAULT_USER} with ${addedCount} new entries.`);
     }
   },
 
-  // --- Data Management ---
+  // ─── Data Management ─────────────────────────────────────────────────────────
 
-  _getDataKey: (username) => `${DATA_KEY_PREFIX}${username}`,
-
-  load: (username) => {
+  load: async (username) => {
     if (!username) return [];
     try {
-      const key = StorageService._getDataKey(username);
-      const serialized = localStorage.getItem(key);
-      if (serialized === null) return [];
-      return JSON.parse(serialized);
+      const q = query(collection(db, 'entries'), where('username', '==', username));
+      const snapshot = await getDocs(q);
+      const data = snapshot.docs.map(d => ({ ...d.data(), id: d.id }));
+      // Sort by date descending
+      data.sort((a, b) => new Date(b.date) - new Date(a.date));
+      return data;
     } catch (e) {
-      console.error("Failed to load data:", e);
+      console.error('Firestore load failed:', e);
       return [];
     }
   },
 
-  save: (username, data) => {
-    if (!username) return false;
+  addEntry: async (username, entry) => {
+    const newRef = doc(collection(db, 'entries'));
+    const newEntry = {
+      id: newRef.id,
+      username,
+      createdAt: new Date().toISOString(),
+      ...entry
+    };
+    await setDoc(newRef, newEntry);
+    return newEntry;
+  },
+
+  updateEntry: async (username, updatedEntry) => {
     try {
-      const key = StorageService._getDataKey(username);
-      const serialized = JSON.stringify(data);
-      localStorage.setItem(key, serialized);
+      const entryRef = doc(db, 'entries', updatedEntry.id);
+      await updateDoc(entryRef, { ...updatedEntry });
       return true;
     } catch (e) {
-      console.error("Failed to save data:", e);
+      console.error('Firestore updateEntry failed:', e);
       return false;
     }
   },
 
-  addEntry: (username, entry) => {
-    const data = StorageService.load(username);
-    const newEntry = {
-      id: uuidv4(),
-      createdAt: new Date().toISOString(),
-      ...entry
-    };
-    data.push(newEntry);
-    StorageService.save(username, data);
-    return newEntry;
-  },
-
-  updateEntry: (username, updatedEntry) => {
-    const data = StorageService.load(username);
-    const index = data.findIndex(item => item.id === updatedEntry.id);
-    if (index !== -1) {
-      data[index] = { ...data[index], ...updatedEntry };
-      StorageService.save(username, data);
-      return true;
+  deleteEntry: async (username, id) => {
+    try {
+      await deleteDoc(doc(db, 'entries', id));
+      return await StorageService.load(username);
+    } catch (e) {
+      console.error('Firestore deleteEntry failed:', e);
+      return [];
     }
-    return false;
   },
 
-  deleteEntry: (username, id) => {
-    const data = StorageService.load(username);
-    const newData = data.filter(item => item.id !== id);
-    StorageService.save(username, newData);
-    return newData;
+  // save() kept for backward compatibility (import flow uses it)
+  save: async (username, data) => {
+    if (!username || !Array.isArray(data)) return false;
+    try {
+      // Delete existing entries for this user, then bulk-write new ones
+      const q = query(collection(db, 'entries'), where('username', '==', username));
+      const snapshot = await getDocs(q);
+
+      const batch = writeBatch(db);
+      snapshot.docs.forEach(d => batch.delete(d.ref));
+
+      data.forEach(entry => {
+        const ref = entry.id
+          ? doc(db, 'entries', entry.id)
+          : doc(collection(db, 'entries'));
+        batch.set(ref, { ...entry, username });
+      });
+
+      await batch.commit();
+      return true;
+    } catch (e) {
+      console.error('Firestore save failed:', e);
+      return false;
+    }
   },
 
-  clear: (username) => {
+  clear: async (username) => {
     if (!username) return;
-    localStorage.removeItem(StorageService._getDataKey(username));
+    await StorageService.save(username, []);
     return [];
   },
 
-  exportToExcel: (username, startDate, endDate, selectedTasks = []) => {
-    const data = StorageService.load(username);
+  // ─── Export / Import (unchanged logic, just uses async load/save) ─────────────
+
+  exportToExcel: async (username, startDate, endDate, selectedTasks = []) => {
+    const data = await StorageService.load(username);
 
     const filteredData = data.filter(item => {
       const itemDate = new Date(item.date);
@@ -200,19 +245,13 @@ export const StorageService = {
       end.setHours(23, 59, 59, 999);
       const itemDay = new Date(itemDate);
       itemDay.setHours(12, 0, 0, 0);
-
       const dateInRange = itemDay >= start && itemDay <= end;
-
-      // If selectedTasks is empty or contains "All" (conceptually), we show all.
-      // But typically UI passes [] for all? Or we check length.
-      // Logic: If selectedTasks has items, require match.
       const taskMatch = selectedTasks.length === 0 || selectedTasks.includes(item.task);
-
       return dateInRange && taskMatch;
     });
 
     if (filteredData.length === 0) {
-      alert("No data found for the selected criteria.");
+      alert('No data found for the selected criteria.');
       return;
     }
 
@@ -228,20 +267,20 @@ export const StorageService = {
 
     const worksheet = XLSX.utils.json_to_sheet(excelData);
     const workbook = XLSX.utils.book_new();
-    XLSX.utils.book_append_sheet(workbook, worksheet, "Work Log");
+    XLSX.utils.book_append_sheet(workbook, worksheet, 'Work Log');
 
     const filename = `WorkLog_${username}_${startDate}_to_${endDate}.xlsx`;
     XLSX.writeFile(workbook, filename);
   },
 
-  exportToJson: (username) => {
-    const data = StorageService.load(username);
+  exportToJson: async (username) => {
+    const data = await StorageService.load(username);
     if (!data || data.length === 0) {
-      alert("No data found to export.");
+      alert('No data found to export.');
       return;
     }
     const jsonString = JSON.stringify(data, null, 2);
-    const blob = new Blob([jsonString], { type: "application/json" });
+    const blob = new Blob([jsonString], { type: 'application/json' });
     const url = URL.createObjectURL(blob);
     const link = document.createElement('a');
     link.href = url;
@@ -254,7 +293,7 @@ export const StorageService = {
   importFromExcel: async (username, file) => {
     return new Promise((resolve, reject) => {
       const reader = new FileReader();
-      reader.onload = (e) => {
+      reader.onload = async (e) => {
         try {
           const data = new Uint8Array(e.target.result);
           const workbook = XLSX.read(data, { type: 'array' });
@@ -262,26 +301,28 @@ export const StorageService = {
           const worksheet = workbook.Sheets[firstSheetName];
           const jsonData = XLSX.utils.sheet_to_json(worksheet);
 
+          const currentData = await StorageService.load(username);
           let importedCount = 0;
-          jsonData.forEach(row => {
-            // Start Basic Validation
-            if (!row.Date || !row.Task) return; // Skip invalid rows or total row
-            if (row.Date === 'Total') return;
 
-            // Create Entry
-            const newEntry = {
-              id: uuidv4(),
+          const batch = writeBatch(db);
+
+          jsonData.forEach(row => {
+            if (!row.Date || !row.Task) return;
+            if (row.Date === 'Total') return;
+            const newRef = doc(collection(db, 'entries'));
+            batch.set(newRef, {
+              id: newRef.id,
+              username,
               createdAt: new Date().toISOString(),
               date: row.Date,
               task: row.Task,
               hours: row.Hours || 0,
               details: row.Details || ''
-            };
-
-            // Add directly to storage (appending)
-            StorageService.addEntry(username, newEntry);
+            });
             importedCount++;
           });
+
+          await batch.commit();
           resolve(importedCount);
         } catch (error) {
           reject(error);

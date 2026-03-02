@@ -1,20 +1,21 @@
 import React, { useState } from 'react';
-import { Card, Form, Button, Alert } from 'react-bootstrap';
-import { User, KeyRound, ArrowRight, ShieldAlert, ArrowLeft } from 'lucide-react';
+import { Form } from 'react-bootstrap';
+import { User, KeyRound, ArrowRight, ShieldAlert, ArrowLeft, BriefcaseIcon } from 'lucide-react';
 import { StorageService } from '../services/storage';
 
 export function LoginScreen({ onLogin }) {
     const [isSignUp, setIsSignUp] = useState(false);
     const [isAdminMode, setIsAdminMode] = useState(false);
-
     const [username, setUsername] = useState('');
     const [passkey, setPasskey] = useState('');
     const [adminPasscode, setAdminPasscode] = useState('');
     const [error, setError] = useState('');
+    const [loading, setLoading] = useState(false);
 
-    const handleSubmit = (e) => {
+    const handleSubmit = async (e) => {
         e.preventDefault();
         setError('');
+        setLoading(true);
 
         if (isAdminMode) {
             if (adminPasscode === 'cosmos') {
@@ -22,20 +23,22 @@ export function LoginScreen({ onLogin }) {
             } else {
                 setError('Invalid admin passcode');
             }
+            setLoading(false);
             return;
         }
 
         if (!username.trim() || !passkey.trim()) {
             setError('Please fill in all fields');
+            setLoading(false);
             return;
         }
 
         try {
             if (isSignUp) {
-                StorageService.createUser(username, passkey);
+                await StorageService.createUser(username, passkey);
                 onLogin(username);
             } else {
-                const isValid = StorageService.verifyUser(username, passkey);
+                const isValid = await StorageService.verifyUser(username, passkey);
                 if (isValid) {
                     onLogin(username);
                 } else {
@@ -45,6 +48,7 @@ export function LoginScreen({ onLogin }) {
         } catch (err) {
             setError(err.message);
         }
+        setLoading(false);
     };
 
     const toggleAdminMode = () => {
@@ -56,105 +60,134 @@ export function LoginScreen({ onLogin }) {
     };
 
     return (
-        <div className="d-flex align-items-center justify-content-center min-vh-100 fade-in px-3">
-            <Card className="card-glass border-0" style={{ width: '100%', maxWidth: '400px', borderRadius: '1.5rem' }}>
-                <Card.Body className="p-5">
-                    <div className="text-center mb-5">
-                        <h2 className="fw-bold mb-1 text-gradient">
-                            {isAdminMode ? 'SuperAdmin Access' : 'Work Tracker'}
-                        </h2>
-                        <p className="text-muted small">
-                            {isAdminMode ? 'Restricted Area' : 'Your personal productivity space'}
-                        </p>
+        <div style={{
+            minHeight: '100vh', display: 'flex', alignItems: 'center', justifyContent: 'center',
+            background: 'var(--bg)', padding: '1.5rem'
+        }}>
+            <div className="fade-in-up" style={{
+                width: '100%', maxWidth: 380,
+                background: 'var(--surface)', border: '1px solid var(--border)',
+                borderRadius: 20, boxShadow: 'var(--shadow-xl)', padding: '2.5rem'
+            }}>
+                {/* Logo */}
+                <div style={{ textAlign: 'center', marginBottom: '2rem' }}>
+                    <div style={{
+                        width: 48, height: 48, borderRadius: 14, background: 'var(--primary)',
+                        display: 'flex', alignItems: 'center', justifyContent: 'center',
+                        margin: '0 auto 1rem', boxShadow: '0 4px 12px var(--primary-ring)'
+                    }}>
+                        <BriefcaseIcon size={24} color="white" />
                     </div>
+                    <h1 style={{ fontSize: '1.3rem', fontWeight: 700, margin: 0, letterSpacing: '-.02em' }}>
+                        {isAdminMode ? 'Admin Access' : 'Work Tracker'}
+                    </h1>
+                    <p style={{ color: 'var(--text-3)', fontSize: '0.85rem', marginTop: 4 }}>
+                        {isAdminMode ? 'Restricted — authorized personnel only' : isSignUp ? 'Create your workspace' : 'Sign in to your workspace'}
+                    </p>
+                </div>
 
-                    {error && <Alert variant="danger" className="py-2 small border-0 mb-4 fade-in">{error}</Alert>}
+                {/* Error */}
+                {error && (
+                    <div className="fade-in" style={{
+                        background: '#fff1f2', border: '1px solid #fecdd3', color: 'var(--rose)',
+                        padding: '0.6rem 1rem', borderRadius: 8, fontSize: '0.85rem',
+                        marginBottom: '1.25rem', fontWeight: 500
+                    }}>
+                        {error}
+                    </div>
+                )}
 
-                    <Form onSubmit={handleSubmit}>
-                        {isAdminMode ? (
-                            // Admin Mode
-                            <Form.Group className="mb-5 fade-in">
-                                <Form.Label className="small fw-bold text-uppercase text-secondary letter-spacing-1">Admin Passcode</Form.Label>
-                                <div className="position-relative">
-                                    <ShieldAlert size={18} className="position-absolute ms-3 top-50 translate-middle-y text-danger" />
+                <form onSubmit={handleSubmit}>
+                    {isAdminMode ? (
+                        <div style={{ marginBottom: '1.5rem' }}>
+                            <label className="form-field-label">Admin Passcode</label>
+                            <div style={{ position: 'relative' }}>
+                                <ShieldAlert size={15} style={{ position: 'absolute', left: 12, top: '50%', transform: 'translateY(-50%)', color: 'var(--rose)' }} />
+                                <input
+                                    type="password"
+                                    className="input-modern form-control"
+                                    style={{ paddingLeft: '2.2rem !important' }}
+                                    placeholder="Enter passcode"
+                                    value={adminPasscode}
+                                    onChange={(e) => setAdminPasscode(e.target.value)}
+                                    autoFocus
+                                />
+                            </div>
+                        </div>
+                    ) : (
+                        <>
+                            <div style={{ marginBottom: '1rem' }}>
+                                <label className="form-field-label">Username</label>
+                                <div style={{ position: 'relative' }}>
+                                    <User size={15} style={{ position: 'absolute', left: 12, top: '50%', transform: 'translateY(-50%)', color: 'var(--text-3)' }} />
                                     <Form.Control
-                                        type="password"
-                                        className="input-modern ps-5"
-                                        placeholder="Enter Password"
-                                        value={adminPasscode}
-                                        onChange={(e) => setAdminPasscode(e.target.value)}
+                                        type="text"
+                                        className="input-modern"
+                                        style={{ paddingLeft: '2.2rem' }}
+                                        placeholder="Enter your username"
+                                        value={username}
+                                        onChange={(e) => setUsername(e.target.value)}
                                         autoFocus
                                     />
                                 </div>
-                            </Form.Group>
-                        ) : (
-                            // User Mode
-                            <>
-                                <Form.Group className="mb-4 fade-in">
-                                    <Form.Label className="small fw-bold text-uppercase text-secondary letter-spacing-1">Username</Form.Label>
-                                    <div className="position-relative">
-                                        <User size={18} className="position-absolute ms-3 top-50 translate-middle-y text-muted" />
-                                        <Form.Control
-                                            type="text"
-                                            className="input-modern ps-5"
-                                            placeholder="Enter your username"
-                                            value={username}
-                                            onChange={(e) => setUsername(e.target.value)}
-                                            autoFocus
-                                        />
-                                    </div>
-                                </Form.Group>
-
-                                <Form.Group className="mb-5 fade-in">
-                                    <Form.Label className="small fw-bold text-uppercase text-secondary letter-spacing-1">User Passkey</Form.Label>
-                                    <div className="position-relative">
-                                        <KeyRound size={18} className="position-absolute ms-3 top-50 translate-middle-y text-muted" />
-                                        <Form.Control
-                                            type="password"
-                                            className="input-modern ps-5"
-                                            placeholder="Create or enter passkey"
-                                            value={passkey}
-                                            onChange={(e) => setPasskey(e.target.value)}
-                                        />
-                                    </div>
-                                </Form.Group>
-                            </>
-                        )}
-
-                        <Button type="submit" className="w-100 btn-modern py-3 d-flex align-items-center justify-content-center mb-3">
-                            {isAdminMode ? 'Unlock Panel' : (isSignUp ? 'Create Account' : 'Sign In')}
-                            <ArrowRight size={18} className="ms-2" />
-                        </Button>
-                    </Form>
-
-                    {/* Footer Controls */}
-                    <div className="d-flex flex-column align-items-center mt-4 gap-2">
-                        {!isAdminMode && (
-                            <div>
-                                <span className="text-muted small me-2">{isSignUp ? 'Already have an space?' : 'New here?'}</span>
-                                <button
-                                    className="btn btn-link p-0 text-decoration-none fw-bold"
-                                    style={{ color: 'var(--primary-color)' }}
-                                    onClick={() => { setIsSignUp(!isSignUp); setError(''); }}
-                                >
-                                    {isSignUp ? 'Log In' : 'Create Space'}
-                                </button>
                             </div>
-                        )}
+                            <div style={{ marginBottom: '1.5rem' }}>
+                                <label className="form-field-label">Passkey</label>
+                                <div style={{ position: 'relative' }}>
+                                    <KeyRound size={15} style={{ position: 'absolute', left: 12, top: '50%', transform: 'translateY(-50%)', color: 'var(--text-3)' }} />
+                                    <Form.Control
+                                        type="password"
+                                        className="input-modern"
+                                        style={{ paddingLeft: '2.2rem' }}
+                                        placeholder={isSignUp ? 'Choose a passkey' : 'Enter your passkey'}
+                                        value={passkey}
+                                        onChange={(e) => setPasskey(e.target.value)}
+                                    />
+                                </div>
+                            </div>
+                        </>
+                    )}
 
-                        <button
-                            className="btn btn-link p-0 text-decoration-none small text-secondary opacity-75 hover-opacity-100 mt-2"
-                            onClick={toggleAdminMode}
-                        >
-                            {isAdminMode ? (
-                                <><ArrowLeft size={14} className="me-1" /> Back to User Login</>
-                            ) : (
-                                <><ShieldAlert size={14} className="me-1" /> SuperAdmin Login</>
-                            )}
-                        </button>
-                    </div>
-                </Card.Body>
-            </Card>
+                    <button
+                        type="submit"
+                        disabled={loading}
+                        style={{
+                            width: '100%', background: loading ? 'var(--border)' : 'var(--primary)',
+                            color: 'white', border: 'none', borderRadius: 10, padding: '0.7rem',
+                            fontWeight: 600, fontSize: '0.9rem', display: 'flex', alignItems: 'center',
+                            justifyContent: 'center', gap: 8, cursor: loading ? 'not-allowed' : 'pointer',
+                            transition: 'all .15s', fontFamily: 'inherit', marginBottom: '1.25rem'
+                        }}
+                    >
+                        {isAdminMode ? 'Enter Panel' : isSignUp ? 'Create Workspace' : 'Sign In'}
+                        <ArrowRight size={16} />
+                    </button>
+                </form>
+
+                {/* Footer */}
+                <div style={{ textAlign: 'center', display: 'flex', flexDirection: 'column', gap: 8, alignItems: 'center' }}>
+                    {!isAdminMode && (
+                        <div style={{ fontSize: '0.82rem', color: 'var(--text-3)' }}>
+                            {isSignUp ? 'Already have a space?' : 'New here?'}{' '}
+                            <button
+                                onClick={() => { setIsSignUp(!isSignUp); setError(''); }}
+                                style={{ background: 'none', border: 'none', color: 'var(--primary)', fontWeight: 600, fontSize: '0.82rem', cursor: 'pointer', padding: 0, fontFamily: 'inherit' }}
+                            >
+                                {isSignUp ? 'Sign In' : 'Create Space'}
+                            </button>
+                        </div>
+                    )}
+                    <button
+                        onClick={toggleAdminMode}
+                        style={{
+                            background: 'none', border: 'none', color: 'var(--text-3)', fontSize: '0.78rem',
+                            cursor: 'pointer', display: 'flex', alignItems: 'center', gap: 4, fontFamily: 'inherit'
+                        }}
+                    >
+                        {isAdminMode ? <><ArrowLeft size={12} /> Back to User Login</> : <><ShieldAlert size={12} /> Admin Login</>}
+                    </button>
+                </div>
+            </div>
         </div>
     );
 }
