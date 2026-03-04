@@ -155,7 +155,7 @@ function App() {
           </div>
 
           {/* Center: user + total */}
-          <div className="d-flex align-items-center gap-2">
+          <div className="topbar-center">
             <div className="user-pill">
               <span className="user-dot" />
               {currentUser}
@@ -169,7 +169,7 @@ function App() {
           {/* Actions */}
           <div className="topbar-actions">
             <input type="file" accept=".xlsx,.xls" id="import-excel" style={{ display: 'none' }} onChange={handleImport} />
-            <button className="icon-btn" onClick={() => document.getElementById('import-excel').click()} title="Import Excel">
+            <button className="icon-btn topbar-btn-import" onClick={() => document.getElementById('import-excel').click()} title="Import Excel">
               <Upload size={16} />
             </button>
             <button className="icon-btn" onClick={() => setShowExportModal(true)} title="Export">
@@ -182,7 +182,7 @@ function App() {
             >
               <Trash2 size={16} />
             </button>
-            <div style={{ width: 1, height: 22, background: 'var(--border)', margin: '0 4px' }} />
+            <div className="topbar-divider" style={{ width: 1, height: 22, background: 'var(--border)', margin: '0 4px' }} />
             <button className="icon-btn" onClick={toggleTheme} title={darkMode ? 'Switch to Light Mode' : 'Switch to Dark Mode'}>
               {darkMode ? <Sun size={16} /> : <Moon size={16} />}
             </button>
@@ -236,7 +236,7 @@ function App() {
         <WorkEntryForm onSave={handleAddEntry} existingTasks={uniqueTasks} />
 
         {/* Charts Row */}
-        <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '1rem', marginBottom: '1rem' }}>
+        <div className="charts-grid">
           <div className="chart-container-glass">
             <div style={{ fontSize: '0.82rem', fontWeight: 600, color: 'var(--text-3)', textTransform: 'uppercase', letterSpacing: '.06em', marginBottom: '1rem' }}>
               Weekly Activity

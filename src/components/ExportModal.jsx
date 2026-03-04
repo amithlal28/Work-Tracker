@@ -48,14 +48,14 @@ export function ExportModal({ show, onHide, onExport, onExportJson, availableTas
                             <Col md={6}>
                                 <Form.Group>
                                     <Form.Label className="small fw-bold text-secondary mb-2">DATE RANGE</Form.Label>
-                                    <div className="d-flex align-items-center gap-2">
+                                    <div className="date-range-row">
                                         <Form.Control
                                             type="date"
                                             value={startDate}
                                             onChange={(e) => setStartDate(e.target.value)}
                                             className="input-modern shadow-sm"
                                         />
-                                        <span className="text-muted fw-bold">to</span>
+                                        <span className="text-muted fw-bold to-label">to</span>
                                         <Form.Control
                                             type="date"
                                             value={endDate}

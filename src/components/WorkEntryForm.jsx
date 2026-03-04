@@ -59,7 +59,7 @@ export function WorkEntryForm({ onSave, existingTasks = [] }) {
                 </div>
             </div>
             <div className="panel-body">
-                <div style={{ display: 'grid', gridTemplateColumns: '170px 1fr 100px', gap: '0.75rem', alignItems: 'end' }}>
+                <div className="entry-form-grid">
                     {/* Date */}
                     <div>
                         <label className="form-field-label">Date</label>

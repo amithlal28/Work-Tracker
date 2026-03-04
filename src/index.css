@@ -68,6 +68,11 @@
   --shadow-xl: 0 20px 25px rgba(0, 0, 0, .5);
 }
 
+html,
+body {
+  overflow-x: hidden;
+}
+
 body {
   margin: 0;
   background: var(--bg);
@@ -83,6 +88,7 @@ body {
   min-height: 100vh;
   display: flex;
   flex-direction: column;
+  overflow-x: hidden;
 }
 
 .app-topbar {
@@ -101,6 +107,15 @@ body {
   display: flex;
   align-items: center;
   justify-content: space-between;
+  gap: 8px;
+}
+
+@media (max-width: 480px) {
+  .app-topbar-inner {
+    padding: 0 1rem;
+    height: 56px;
+    gap: 4px;
+  }
 }
 
 .app-body {
@@ -111,11 +126,25 @@ body {
   width: 100%;
 }
 
+@media (max-width: 768px) {
+  .app-body {
+    padding: 1.25rem 1rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .app-body {
+    padding: 1rem 0.75rem;
+  }
+}
+
 /* ─── Brand ──────────────────────────── */
 .brand {
   display: flex;
   align-items: center;
-  gap: 12px;
+  gap: 10px;
+  flex-shrink: 0;
+  min-width: 0;
 }
 
 .brand-name {
@@ -123,11 +152,18 @@ body {
   font-weight: 700;
   color: var(--text-1);
   letter-spacing: -0.03em;
+  white-space: nowrap;
+}
+
+@media (max-width: 480px) {
+  .brand-name {
+    font-size: 0.95rem;
+  }
 }
 
 .brand-icon {
-  width: 34px;
-  height: 34px;
+  width: 32px;
+  height: 32px;
   background: var(--primary);
   border-radius: 9px;
   display: flex;
@@ -135,6 +171,17 @@ body {
   justify-content: center;
   color: white;
   box-shadow: 0 2px 8px var(--primary-ring);
+  flex-shrink: 0;
+}
+
+/* ─── Topbar Center ─────────────────── */
+.topbar-center {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  min-width: 0;
+  flex-shrink: 1;
+  overflow: hidden;
 }
 
 /* ─── Pills / Badges ─────────────────── */
@@ -149,6 +196,26 @@ body {
   font-size: 0.8rem;
   font-weight: 500;
   color: var(--text-2);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 130px;
+  flex-shrink: 1;
+}
+
+@media (max-width: 600px) {
+  .user-pill {
+    max-width: 90px;
+    font-size: 0.78rem;
+    padding: 4px 8px 4px 6px;
+  }
+}
+
+@media (max-width: 400px) {
+  .user-pill {
+    max-width: 68px;
+    font-size: 0.72rem;
+  }
 }
 
 .user-dot {
@@ -157,6 +224,7 @@ body {
   border-radius: 50%;
   background: var(--emerald);
   box-shadow: 0 0 0 2px rgba(5, 150, 105, .2);
+  flex-shrink: 0;
 }
 
 .total-pill {
@@ -169,13 +237,44 @@ body {
   padding: 5px 14px;
   font-size: 0.82rem;
   font-weight: 600;
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+
+/* Hide total pill on mobile – it's redundant when space is tight */
+@media (max-width: 520px) {
+  .total-pill {
+    display: none;
+  }
 }
 
 /* ─── Topbar Actions ─────────────────── */
 .topbar-actions {
   display: flex;
   align-items: center;
-  gap: 6px;
+  gap: 4px;
+  flex-shrink: 0;
+}
+
+@media (max-width: 480px) {
+  .topbar-actions {
+    gap: 1px;
+  }
+
+  .topbar-actions .icon-btn {
+    width: 30px;
+    height: 30px;
+  }
+
+  /* Hide import button on mobile — rarely needed */
+  .topbar-btn-import {
+    display: none;
+  }
+
+  /* Hide the vertical separator on small screens */
+  .topbar-divider {
+    display: none;
+  }
 }
 
 .icon-btn {
@@ -215,12 +314,23 @@ body {
 @media (max-width: 900px) {
   .stats-grid {
     grid-template-columns: repeat(2, 1fr);
+    gap: 0.75rem;
   }
 }
 
-@media (max-width: 540px) {
+@media (max-width: 480px) {
   .stats-grid {
-    grid-template-columns: 1fr;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 0.625rem;
+    margin-bottom: 1rem;
+  }
+
+  .stat-card {
+    padding: 1rem 1rem;
+  }
+
+  .stat-value {
+    font-size: 1.4rem;
   }
 }
 
@@ -234,6 +344,7 @@ body {
   gap: 6px;
   box-shadow: var(--shadow-sm);
   transition: box-shadow .2s, transform .2s;
+  min-width: 0;
 }
 
 .stat-card:hover {
@@ -378,14 +489,57 @@ body {
 /* ─── Entry Form ─────────────────────── */
 .entry-form-grid {
   display: grid;
-  grid-template-columns: 180px 1fr 90px;
+  grid-template-columns: 170px 1fr 100px;
   gap: 0.75rem;
   align-items: end;
 }
 
 @media (max-width: 720px) {
   .entry-form-grid {
+    grid-template-columns: 1fr 100px;
+  }
+}
+
+@media (max-width: 480px) {
+  .entry-form-grid {
     grid-template-columns: 1fr;
+  }
+}
+
+/* ─── Charts Grid ────────────────────── */
+.charts-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1rem;
+  margin-bottom: 1rem;
+}
+
+@media (max-width: 768px) {
+  .charts-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* ─── Table Scroll Wrapper ───────────── */
+.table-scroll {
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+}
+
+/* ─── Admin Panel ────────────────────── */
+.admin-shell {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 2.5rem 1.5rem;
+}
+
+@media (max-width: 768px) {
+  .admin-shell {
+    padding: 1.5rem 1rem;
+  }
+
+  .admin-shell h2 {
+    font-size: 1.25rem;
   }
 }
 
@@ -504,6 +658,25 @@ body {
   box-shadow: var(--shadow-xl);
 }
 
+/* ─── Date Range Row ─────────────────── */
+.date-range-row {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+}
+
+@media (max-width: 480px) {
+  .date-range-row {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .date-range-row .to-label {
+    text-align: center;
+  }
+}
+
 .task-pill {
   padding: 0.35rem 0.875rem;
   border-radius: 100px;
@@ -537,6 +710,13 @@ body {
   padding: 2.5rem;
   width: 100%;
   max-width: 400px;
+}
+
+@media (max-width: 480px) {
+  .login-surface {
+    padding: 1.75rem 1.25rem;
+    border-radius: var(--radius-lg);
+  }
 }
 
 /* ─── Animations ─────────────────────── */

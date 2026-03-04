@@ -42,7 +42,7 @@ export function WorkDashboard({ entries, onDelete, onEdit }) {
                 {groupedEntries.map((group) => (
                     <Accordion.Item eventKey={group.date} key={group.date}>
                         <Accordion.Header>
-                            <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', width: '100%', paddingRight: 8 }}>
+                            <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', width: '100%', paddingRight: 8, flexWrap: 'wrap', gap: 4 }}>
                                 <span style={{ fontWeight: 600, fontSize: '0.9rem' }}>
                                     {new Date(group.date + 'T12:00:00').toLocaleDateString('en-US', { weekday: 'short', month: 'short', day: 'numeric', year: 'numeric' })}
                                 </span>
@@ -55,61 +55,63 @@ export function WorkDashboard({ entries, onDelete, onEdit }) {
                             </div>
                         </Accordion.Header>
                         <Accordion.Body>
-                            <table className="table-glass" style={{ width: '100%' }}>
-                                <thead>
-                                    <tr>
-                                        <th style={{ width: '28%' }}>Task</th>
-                                        <th style={{ width: '48%' }}>Details</th>
-                                        <th style={{ width: '10%', textAlign: 'center' }}>Hours</th>
-                                        <th style={{ width: '14%' }}></th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    {group.items.map((entry) => (
-                                        <tr key={entry.id} style={{ transition: 'background .15s' }}>
-                                            <td>
-                                                <span style={{ fontWeight: 500, color: 'var(--text-1)', fontSize: '0.875rem' }}>{entry.task}</span>
-                                            </td>
-                                            <td>
-                                                <span style={{ color: 'var(--text-2)', fontSize: '0.845rem', lineHeight: 1.5 }}>{entry.details}</span>
-                                            </td>
-                                            <td style={{ textAlign: 'center' }}>
-                                                <span style={{ fontWeight: 700, color: 'var(--primary)', fontSize: '0.9rem' }}>
-                                                    {Number(entry.hours) % 1 === 0 ? entry.hours : Number(entry.hours).toFixed(2)}
-                                                </span>
-                                            </td>
-                                            <td>
-                                                <div style={{ display: 'flex', justifyContent: 'flex-end', gap: 6 }}>
-                                                    <button
-                                                        onClick={() => onEdit(entry)}
-                                                        title="Edit"
-                                                        style={{
-                                                            background: 'none', border: 'none', cursor: 'pointer', padding: '5px 7px',
-                                                            borderRadius: 6, color: 'var(--text-3)', transition: 'all .15s'
-                                                        }}
-                                                        onMouseEnter={e => { e.currentTarget.style.background = 'var(--surface-2)'; e.currentTarget.style.color = 'var(--text-1)'; }}
-                                                        onMouseLeave={e => { e.currentTarget.style.background = 'none'; e.currentTarget.style.color = 'var(--text-3)'; }}
-                                                    >
-                                                        <Pencil size={14} />
-                                                    </button>
-                                                    <button
-                                                        onClick={() => onDelete(entry.id)}
-                                                        title="Delete"
-                                                        style={{
-                                                            background: 'none', border: 'none', cursor: 'pointer', padding: '5px 7px',
-                                                            borderRadius: 6, color: 'var(--text-3)', transition: 'all .15s'
-                                                        }}
-                                                        onMouseEnter={e => { e.currentTarget.style.background = '#fff1f2'; e.currentTarget.style.color = 'var(--rose)'; }}
-                                                        onMouseLeave={e => { e.currentTarget.style.background = 'none'; e.currentTarget.style.color = 'var(--text-3)'; }}
-                                                    >
-                                                        <Trash2 size={14} />
-                                                    </button>
-                                                </div>
-                                            </td>
+                            <div className="table-scroll">
+                                <table className="table-glass" style={{ width: '100%' }}>
+                                    <thead>
+                                        <tr>
+                                            <th style={{ width: '28%' }}>Task</th>
+                                            <th style={{ width: '48%' }}>Details</th>
+                                            <th style={{ width: '10%', textAlign: 'center' }}>Hours</th>
+                                            <th style={{ width: '14%' }}></th>
                                         </tr>
-                                    ))}
-                                </tbody>
-                            </table>
+                                    </thead>
+                                    <tbody>
+                                        {group.items.map((entry) => (
+                                            <tr key={entry.id} style={{ transition: 'background .15s' }}>
+                                                <td>
+                                                    <span style={{ fontWeight: 500, color: 'var(--text-1)', fontSize: '0.875rem' }}>{entry.task}</span>
+                                                </td>
+                                                <td>
+                                                    <span style={{ color: 'var(--text-2)', fontSize: '0.845rem', lineHeight: 1.5 }}>{entry.details}</span>
+                                                </td>
+                                                <td style={{ textAlign: 'center' }}>
+                                                    <span style={{ fontWeight: 700, color: 'var(--primary)', fontSize: '0.9rem' }}>
+                                                        {Number(entry.hours) % 1 === 0 ? entry.hours : Number(entry.hours).toFixed(2)}
+                                                    </span>
+                                                </td>
+                                                <td>
+                                                    <div style={{ display: 'flex', justifyContent: 'flex-end', gap: 6 }}>
+                                                        <button
+                                                            onClick={() => onEdit(entry)}
+                                                            title="Edit"
+                                                            style={{
+                                                                background: 'none', border: 'none', cursor: 'pointer', padding: '5px 7px',
+                                                                borderRadius: 6, color: 'var(--text-3)', transition: 'all .15s'
+                                                            }}
+                                                            onMouseEnter={e => { e.currentTarget.style.background = 'var(--surface-2)'; e.currentTarget.style.color = 'var(--text-1)'; }}
+                                                            onMouseLeave={e => { e.currentTarget.style.background = 'none'; e.currentTarget.style.color = 'var(--text-3)'; }}
+                                                        >
+                                                            <Pencil size={14} />
+                                                        </button>
+                                                        <button
+                                                            onClick={() => onDelete(entry.id)}
+                                                            title="Delete"
+                                                            style={{
+                                                                background: 'none', border: 'none', cursor: 'pointer', padding: '5px 7px',
+                                                                borderRadius: 6, color: 'var(--text-3)', transition: 'all .15s'
+                                                            }}
+                                                            onMouseEnter={e => { e.currentTarget.style.background = '#fff1f2'; e.currentTarget.style.color = 'var(--rose)'; }}
+                                                            onMouseLeave={e => { e.currentTarget.style.background = 'none'; e.currentTarget.style.color = 'var(--text-3)'; }}
+                                                        >
+                                                            <Trash2 size={14} />
+                                                        </button>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                        ))}
+                                    </tbody>
+                                </table>
+                            </div>
                         </Accordion.Body>
                     </Accordion.Item>
                 ))}

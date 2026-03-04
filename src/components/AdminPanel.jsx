@@ -35,10 +35,10 @@ export function AdminPanel({ onLogout }) {
     };
 
     return (
-        <div className="container py-5 fade-in" style={{ maxWidth: '800px' }}>
-            <div className="d-flex justify-content-between align-items-center mb-5">
-                <h2 className="fw-bold text-gradient d-flex align-items-center">
-                    <ShieldAlert className="me-3" size={32} />
+        <div className="admin-shell fade-in">
+            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '2rem', flexWrap: 'wrap', gap: '1rem' }}>
+                <h2 style={{ fontWeight: 700, display: 'flex', alignItems: 'center', margin: 0 }}>
+                    <ShieldAlert style={{ marginRight: '0.75rem' }} size={28} />
                     Superadmin Panel
                 </h2>
                 <Button variant="white" onClick={onLogout} className="shadow-sm">
