@@ -22,17 +22,40 @@ import { AdminPanel } from './components/AdminPanel';
 import './App.css';
 
 function App() {
-  const [currentUser, setCurrentUser] = useState(null);
+  // Restore session from sessionStorage on page refresh
+  const [currentUser, setCurrentUser] = useState(() => {
+    return sessionStorage.getItem('work_tracker_user') || null;
+  });
   const [entries, setEntries] = useState([]);
+
+  // Dark mode: per-user key so each user/admin has their own preference
+  const themeKey = currentUser
+    ? `work_tracker_theme_${currentUser}`
+    : 'work_tracker_theme';
+
   const [darkMode, setDarkMode] = useState(() => {
-    return localStorage.getItem('work_tracker_theme') === 'dark';
+    // On first mount (before user is known), read from a pre-login default key
+    const storedUser = sessionStorage.getItem('work_tracker_user');
+    const key = storedUser ? `work_tracker_theme_${storedUser}` : 'work_tracker_theme';
+    return localStorage.getItem(key) === 'dark';
   });
 
-  // Apply dark mode to <html> element
+  // When currentUser changes (login/logout), reload the correct theme for that user
+  useEffect(() => {
+    if (currentUser) {
+      const savedTheme = localStorage.getItem(`work_tracker_theme_${currentUser}`);
+      // If user has a saved preference use it, otherwise keep current
+      if (savedTheme) {
+        setDarkMode(savedTheme === 'dark');
+      }
+    }
+  }, [currentUser]);
+
+  // Apply dark mode to <html> element and save to user-specific key
   useEffect(() => {
     document.documentElement.setAttribute('data-theme', darkMode ? 'dark' : 'light');
-    localStorage.setItem('work_tracker_theme', darkMode ? 'dark' : 'light');
-  }, [darkMode]);
+    localStorage.setItem(themeKey, darkMode ? 'dark' : 'light');
+  }, [darkMode, themeKey]);
 
   const toggleTheme = () => setDarkMode(prev => !prev);
 
@@ -56,8 +79,15 @@ function App() {
     }
   }, [currentUser]);
 
-  const handleLogin = (username) => setCurrentUser(username);
-  const handleLogout = () => { setCurrentUser(null); setEntries([]); };
+  const handleLogin = (username) => {
+    sessionStorage.setItem('work_tracker_user', username);
+    setCurrentUser(username);
+  };
+  const handleLogout = () => {
+    sessionStorage.removeItem('work_tracker_user');
+    setCurrentUser(null);
+    setEntries([]);
+  };
 
   const handleAddEntry = async (entry) => {
     if (!currentUser) return;
